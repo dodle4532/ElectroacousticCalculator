@@ -1,0 +1,19 @@
+﻿<Window x:Class="Calculator.Forms.SaveCalculationForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Calculator.Forms"
+        mc:Ignorable="d"
+        Title="Сохранить расчет" Height="300" Width="500" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Введите имя рассчета" VerticalContentAlignment="Center" FontSize="16" HorizontalContentAlignment="Center"  FontWeight="Bold" Margin="151,40,151,10"/>
+        <TextBox x:Name="tbName" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Margin="92,20,92,37"/>
+        <Button Content="Сохранить" x:Name="btSave" Click="btSave_Click" Grid.Row="1" Margin="92,94,92,41" FontWeight="Bold" Grid.RowSpan="2"/>
+    </Grid>
+</Window>
