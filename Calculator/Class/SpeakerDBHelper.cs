@@ -17,6 +17,7 @@ namespace Calculator.Class
         public List<Speaker> GetAllSpeakers()
         {
             db.Database.EnsureCreated();
+            db.ChangeTracker.Clear();
             db.Speakers.Load();
             return db.Speakers.ToList();
         }
@@ -29,10 +30,12 @@ namespace Calculator.Class
         }
         public void Remove(Speaker speaker)
         {
-            db.Database.EnsureCreated();
-            db.Speakers.Load();
-            db.Speakers.Remove(speaker);
-            db.SaveChanges();
+            using (var db = new AppContext()) // Новый контекст
+            {
+                db.Database.EnsureCreated();
+                db.Speakers.Remove(speaker);
+                db.SaveChanges();
+            }
         }
 
         public void Update(int id, Speaker speaker)

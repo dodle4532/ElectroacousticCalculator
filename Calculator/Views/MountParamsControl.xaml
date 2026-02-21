@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="Calculator.Views.MountParamsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Border BorderBrush="#FF007ACC" 
+            BorderThickness="2" 
+            CornerRadius="5" 
+            Padding="15" 
+            Margin="5">
+        <StackPanel>
+            <TextBlock Text="ПАРАМЕТРЫ УСТАНОВКИ ГРОМКОГОВОРИТЕЛЯ" 
+           FontWeight="Bold" 
+           FontSize="16" 
+           Foreground="#FF007ACC"
+           Margin="0,0,0,15"
+           HorizontalAlignment="Center"/>
+
+            <Border 
+                CornerRadius="5" 
+                  BorderBrush="#FF007ACC" 
+                  BorderThickness="1"
+                  Padding="10,10,10,10">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="79"/>
+                        <ColumnDefinition Width="Auto" MinWidth="115.317"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <!-- Тип установки -->
+                    <Label FontWeight="DemiBold" Grid.Row="0" Grid.Column="0" 
+       Content="Тип установки:" 
+       Margin="5,5,5,5" 
+       />
+                    <ComboBox x:Name="cbType" Height="30"
+          Grid.Row="0" Grid.Column="1" 
+          Margin="10,5,5,5"
+          Grid.ColumnSpan="2"/>
+
+                    <Label FontWeight="DemiBold" Grid.Row="1" Grid.Column="0" Content="Высота установки:" Margin="5,5,5,5"/>
+                    <TextBox x:Name="tb_H" Grid.Row="1" Grid.Column="1" Margin="10,5,10,5"/>
+                    <Label FontWeight="DemiBold" Grid.Row="1" Grid.Column="2" FontStyle="Italic" Content="м" Margin="5,5,5,5"/>
+
+                    <Label FontWeight="DemiBold" Grid.Row="2" Grid.Column="0" Content="Угол наклона:" Margin="5,5,5,5"/>
+                    <TextBox x:Name="tb_UH" Grid.Row="2" Grid.Column="1" Margin="10,5,10,5"/>
+                    <Label FontWeight="DemiBold" Grid.Row="2" Grid.Column="2" FontStyle="Italic" Content="град" Margin="5,5,5,5"/>
+
+                    <Label FontWeight="DemiBold" Grid.Row="3" Grid.Column="0" Content="Напряжение на входе:" Margin="5,5,5,5"/>
+                    <TextBox x:Name="tb_U_vh" Grid.Row="3" Grid.Column="1" Margin="10,5,10,5"/>
+                    <Label FontWeight="DemiBold" Grid.Row="3" Grid.Column="2" FontStyle="Italic" Content="В" Margin="5,5,5,5"/>
+
+                    <Label FontWeight="DemiBold" Grid.Row="4" Grid.Column="0" Content="Макс. потери по напряжению:" Margin="5,5,5,5"/>
+                    <TextBox x:Name="tb_delta" Grid.Row="4" Grid.Column="1" Margin="10,5,10,5"/>
+                    <Label FontWeight="DemiBold" Grid.Row="4" Grid.Column="2" FontStyle="Italic" Content="%" Margin="5,5,5,5"/>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </Border>
+</UserControl>

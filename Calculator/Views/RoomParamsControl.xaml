@@ -1,0 +1,693 @@
+﻿<UserControl x:Class="Calculator.Views.RoomParamsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Border BorderBrush="#FF007ACC" 
+            BorderThickness="2" 
+            CornerRadius="5" 
+            Padding="15" 
+            Margin="5">
+        <StackPanel>
+            <TextBlock Text="ПАРАМЕТРЫ ОЗВУЧИВАЕМОГО ПОМЕЩЕНИЯ" 
+           FontWeight="Bold" 
+           FontSize="16" 
+           Foreground="#FF007ACC"
+           Margin="0,0,0,15"
+           HorizontalAlignment="Center"/>
+
+            <Border 
+                CornerRadius="5" 
+                  BorderBrush="#FF007ACC" 
+                  BorderThickness="1"
+                  Padding="10">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="75"/>
+                        <ColumnDefinition Width="45"/>
+                        <ColumnDefinition Width="450"/>
+                        <ColumnDefinition Width="420"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+
+                    <Label FontWeight="DemiBold" Grid.Row="1" Grid.Column="0" Content="Средний уровень шума:" Margin="5,5,5,5"/>
+                    <TextBox Height="27" x:Name="tb_USH_p" Grid.Row="1" Grid.Column="1" Margin="10,5,10,5" IsReadOnly="True" Foreground="Black" Background="LightGray"/>
+                    <Label FontWeight="DemiBold" Grid.Row="1" Grid.Column="2" FontStyle="Italic" Content="дБ" Margin="5,5,0,5" HorizontalAlignment="Left" Width="30"/>
+
+                    <Label FontWeight="DemiBold" Grid.Row="2" Grid.Column="0" Content="Длина помещения:" Margin="5,5,5,5"/>
+                    <TextBox Height="27" x:Name="tb_a" Grid.Row="2" Grid.Column="1" Margin="10,5,10,5"/>
+                    <Label FontWeight="DemiBold" Grid.Row="2" Grid.Column="2" FontStyle="Italic" Content="м" Margin="5,5,0,5" HorizontalAlignment="Left" Width="30"/>
+
+                    <Label FontWeight="DemiBold" Grid.Row="3" Grid.Column="0" Content="Ширина помещения:" Margin="5,5,5,5"/>
+                    <TextBox Height="27" x:Name="tb_b" Grid.Row="3" Grid.Column="1" Margin="10,5,10,5" />
+                    <Label FontWeight="DemiBold" Grid.Row="3" Grid.Column="2" FontStyle="Italic" Content="м" Margin="5,5,0,5" HorizontalAlignment="Left" Width="30"/>
+
+                    <Label FontWeight="DemiBold" Grid.Row="4" Grid.Column="0" Content="Высота потолков:" Margin="5,5,5,5"/>
+                    <TextBox Height="27" x:Name="tb_h" Grid.Row="4" Grid.Column="1" Margin="10,5,10,5"/>
+                    <Label FontWeight="DemiBold" Grid.Row="4" Grid.Column="2" FontStyle="Italic" Content="м" Margin="5,5,0,5" HorizontalAlignment="Left" Width="30"/>
+
+                    <Label FontWeight="DemiBold" Grid.Row="5" Grid.Column="0" Content="Количество людей:" Margin="5,5,5,5"/>
+                    <TextBox Height="27" x:Name="tb_N" Grid.Row="5" Grid.Column="1" Margin="10,5,10,5"/>
+                    <Label FontWeight="DemiBold" Grid.Row="5" Grid.Column="2" FontStyle="Italic" Content="чел" Margin="5,5,0,5" HorizontalAlignment="Left" Width="30"/>
+
+                    <Label FontWeight="DemiBold" Grid.Row="12" Grid.Column="0" Content="Коэф. звукопоглощения поверхностей:" Margin="5,5,5,5"/>
+                    <TextBox Height="27" x:Name="tb_a1" Grid.Row="12" Grid.Column="1" Margin="10,5,10,5"/>
+
+                    <!-- Коэф. звукопоглощения 1 чел - теперь сразу после поверхностей -->
+                    <Label FontWeight="DemiBold" Grid.Row="13" Grid.Column="0" Content="Коэф. звукопоглощения 1 чел:" Margin="5,5,5,5"/>
+                    <TextBox Height="27" x:Name="tb_a2" Grid.Row="13" Grid.Column="1" Margin="10,5,10,5"/>
+
+                    <!-- Остальные 6 параметров смещены на 2 строки вниз (были с 7-12, стали с 8-13) -->
+                    <Label FontWeight="DemiBold" Grid.Row="6" Grid.Column="0" Content="Звукопоглощение потолка (4кГц)" Margin="5,5,5,5"/>
+                    <TextBox Height="27" x:Name="tb_a1_potolok" Grid.Row="6" Grid.Column="1" Margin="10,5,10,5"/>
+
+                    <Label FontWeight="DemiBold" Grid.Row="7" Grid.Column="0" Content="Звукопоглощение задней стены (4кГц)" Margin="5,5,5,5"/>
+                    <TextBox Height="27" x:Name="tb_a1_back_wall" Grid.Row="7" Grid.Column="1" Margin="10,5,10,5"/>
+
+                    <Label FontWeight="DemiBold" Grid.Row="8" Grid.Column="0" Content="Звукопоглощение противоположной стены (4кГц)" Margin="5,5,5,5"/>
+                    <TextBox Height="27" x:Name="tb_a1_opp_wall" Grid.Row="8" Grid.Column="1" Margin="10,5,10,5"/>
+
+                    <Label FontWeight="DemiBold" Grid.Row="9" Grid.Column="0" Content="Звукопоглощение левой стены (4кГц)" Margin="5,5,5,5"/>
+                    <TextBox Height="27" x:Name="tb_a1_left_wall" Grid.Row="9" Grid.Column="1" Margin="10,5,10,5"/>
+
+                    <Label FontWeight="DemiBold" Grid.Row="10" Grid.Column="0" Content="Звукопоглощение правой стены (4кГц)" Margin="5,5,5,5"/>
+                    <TextBox Height="27" x:Name="tb_a1_right_wall" Grid.Row="10" Grid.Column="1" Margin="10,5,10,5"/>
+
+                    <Label FontWeight="DemiBold" Grid.Row="11" Grid.Column="0" Content="Звукопоглощение пола (4кГц)" Margin="5,5,5,5"/>
+                    <TextBox Height="27" x:Name="tb_a1_bottom" Grid.Row="11" Grid.Column="1" Margin="10,5,10,5"/>
+                    <Border Grid.Row="1" Grid.Column="3" Grid.RowSpan="4" 
+        BorderBrush="#FF007ACC" 
+        BorderThickness="1" 
+        CornerRadius="5" 
+        Padding="5"
+        Margin="5,5,19,7">
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <!-- для TextBlock -->
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <!-- для ComboBox -->
+                                <RowDefinition Height="*"/>
+                                <!-- для DataGrid -->
+                            </Grid.RowDefinitions>
+                            <TextBlock FontWeight="DemiBold" Grid.Row="1"  Grid.Column="3" Text="Предельно допустимые уровни шума (СП 51.13330-2011)" Margin="5,5,5,5"/>
+                            <ComboBox x:Name="cbNoiseLevel"
+                        Grid.Row="2" 
+                        Margin="5,5,10,7" ItemsSource="{Binding NoiseLevel}" DisplayMemberPath="Name" SelectionChanged="cbNoiseLevel_SelectionChanged"/>
+                            <DataGrid Style="{StaticResource {x:Type DataGrid}}"  x:Name="DataGridNoise" FontSize="13" RowHeaderWidth="0" SelectionMode="Single"
+        BorderThickness="1"
+        IsSynchronizedWithCurrentItem="False"
+Grid.Row="3"
+AutoGenerateColumns="False"
+CanUserAddRows="False"
+                              CanUserResizeColumns="False"
+CanUserDeleteRows="False"
+CanUserReorderColumns="False"
+CanUserResizeRows="False"
+HeadersVisibility="All"
+                                Background="#F0F8FF"
+SelectionUnit="Cell"
+Margin="5,3,10,0" PreviewMouseWheel="DataGrid_PreviewMouseWheel" VerticalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="66" VerticalAlignment="Top">
+                                <DataGrid.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        <!-- 👇 Убираем синее выделение -->
+                                        <Setter Property="Background" Value="#F0F8FF"/>
+                                        <Setter Property="BorderBrush" Value="#F0F8FF"/>
+                                        <Style.Triggers>
+                                            <!-- При выборе ячейки - никакого синего фона -->
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                            </Trigger>
+                                            <!-- При наведении - тоже без изменений -->
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.CellStyle>
+                                <!-- Стиль для столбцов -->
+                                <DataGrid.ColumnHeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="Background" Value="#F0F0F0"/>
+                                        <Setter Property="BorderBrush" Value="Black"/>
+                                        <!-- Черный -->
+                                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="Height" Value="30"/>
+                                    </Style>
+                                </DataGrid.ColumnHeaderStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="" Width="0" Visibility="Collapsed"/>
+                                    <DataGridTextColumn Header="0.25" Binding="{Binding val1}" Width="5*">
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                                <!-- Не реагирует на клики -->
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Background" Value="#F8F8F8"/>
+                                                        <Setter Property="BorderBrush" Value="Black"/>
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="TextAlignment" Value="Center"/>
+                                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="0.5" Binding="{Binding val2}" Width="5*">
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                                <!-- Не реагирует на клики -->
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Background" Value="#F8F8F8"/>
+                                                        <Setter Property="BorderBrush" Value="Black"/>
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="TextAlignment" Value="Center"/>
+                                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="1" Binding="{Binding val3}" Width="5*">
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                                <!-- Не реагирует на клики -->
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Background" Value="#F8F8F8"/>
+                                                        <Setter Property="BorderBrush" Value="Black"/>
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="TextAlignment" Value="Center"/>
+                                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="2" Binding="{Binding val4}" Width="5*">
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                                <!-- Не реагирует на клики -->
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Background" Value="#F8F8F8"/>
+                                                        <Setter Property="BorderBrush" Value="Black"/>
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="TextAlignment" Value="Center"/>
+                                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="4" Binding="{Binding val5}" Width="5*">
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                                <!-- Не реагирует на клики -->
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Background" Value="#F8F8F8"/>
+                                                        <Setter Property="BorderBrush" Value="Black"/>
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="TextAlignment" Value="Center"/>
+                                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="кГц" Binding="{Binding Metric}" Width="5*">
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                                <Setter Property="FontStyle" Value="Italic"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="FontStyle" Value="Italic"/>
+                                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                                <!-- Не реагирует на клики -->
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Background" Value="#F8F8F8"/>
+                                                        <Setter Property="BorderBrush" Value="Black"/>
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                        <Setter Property="BorderThickness" Value="2,2,2,2"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="TextAlignment" Value="Center"/>
+                                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Border>
+                    <!-- Вместо отдельных элементов для комбобоксов и таблицы -->
+                    <Border Grid.Row="5" Grid.Column="3" Grid.RowSpan="8"
+        BorderBrush="#FF007ACC"
+        BorderThickness="1"
+        CornerRadius="5"
+        Padding="5"
+        Margin="5,0,0,31" Grid.ColumnSpan="2">
+
+                        <Grid Margin="0,0,-6,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <!-- Заголовок (опционально) -->
+                                <RowDefinition Height="40"/>
+                                <!-- Комбобокс потолок -->
+                                <RowDefinition Height="40"/>
+                                <!-- Комбобокс задняя стена -->
+                                <RowDefinition Height="40"/>
+                                <!-- Комбобокс противоположная стена -->
+                                <RowDefinition Height="40"/>
+                                <!-- Комбобокс левая стена -->
+                                <RowDefinition Height="40"/>
+                                <!-- Комбобокс правая стена -->
+                                <RowDefinition Height="40"/>
+                                <!-- Комбобокс пол -->
+                                <RowDefinition Height="*"/>
+                                <!-- Таблица -->
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="450"/>
+                                <ColumnDefinition Width="430"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox x:Name="cbCeil"
+    Grid.Row="1" 
+    Margin="5,7,35,3" ItemsSource="{Binding Surface}" DisplayMemberPath="Name" SelectionChanged="cbCeil_SelectionChanged" Grid.Column="0"/>
+                            <ComboBox x:Name="cbBack"
+    Grid.Row="2" 
+    Margin="5,7,35,3" ItemsSource="{Binding Surface}" DisplayMemberPath="Name" SelectionChanged="cbBack_SelectionChanged" Grid.Column="0"/>
+                            <ComboBox x:Name="cbOpp"
+    Grid.Row="3" 
+    Margin="5,7,35,3" ItemsSource="{Binding Surface}" DisplayMemberPath="Name" SelectionChanged="cbOpp_SelectionChanged" Grid.Column="0"/>
+                            <ComboBox x:Name="cbLeft"
+    Grid.Row="4" 
+    Margin="5,7,35,3" ItemsSource="{Binding Surface}" DisplayMemberPath="Name" SelectionChanged="cbLeft_SelectionChanged" Grid.Column="0"/>
+                            <ComboBox x:Name="cbRight"
+    Grid.Row="5" 
+    Margin="5,7,35,3" ItemsSource="{Binding Surface}" DisplayMemberPath="Name" SelectionChanged="cbRight_SelectionChanged" Grid.Column="0"/>
+                            <ComboBox x:Name="cbBottom"
+    Grid.Row="6" 
+    Margin="5,7,35,3" ItemsSource="{Binding Surface}" DisplayMemberPath="Name" SelectionChanged="cbBottom_SelectionChanged" Grid.Column="0"/>
+                            <DataGrid Style="{StaticResource {x:Type DataGrid}}"  x:Name="DataGridSurface" FontSize="13" RowHeaderWidth="0" SelectionMode="Single"
+    BorderThickness="1"
+    IsSynchronizedWithCurrentItem="False"
+    Grid.Row="0"
+    AutoGenerateColumns="False"
+    CanUserAddRows="False"
+    CanUserResizeColumns="False"
+    CanUserDeleteRows="False"
+    CanUserReorderColumns="False"
+    CanUserResizeRows="False"
+    HeadersVisibility="All"
+    Background="#F0F8FF"
+    SelectionUnit="Cell"
+    Margin="10,0,40,0" PreviewMouseWheel="DataGrid_PreviewMouseWheel" Loaded="DataGrid_Loaded" VerticalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="270" VerticalAlignment="Center" Grid.RowSpan="7" Grid.Column="1">
+                                <DataGrid.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}">
+                                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        <!-- 👇 Убираем синее выделение -->
+                                        <Setter Property="Background" Value="#F0F8FF"/>
+                                        <Setter Property="BorderBrush" Value="#F0F8FF"/>
+                                        <Style.Triggers>
+                                            <!-- При выборе ячейки - никакого синего фона -->
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                            </Trigger>
+                                            <!-- При наведении - тоже без изменений -->
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.CellStyle>
+                                <!-- Стиль для столбцов -->
+                                <DataGrid.ColumnHeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                                        <Setter Property="Background" Value="#F0F0F0"/>
+                                        <Setter Property="BorderBrush" Value="Black"/>
+                                        <!-- Черный -->
+                                        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="Height" Value="30"/>
+                                    </Style>
+                                </DataGrid.ColumnHeaderStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="" Width="0" Visibility="Collapsed"/>
+                                    <DataGridTextColumn Header="0.25" Binding="{Binding val1}" Width="5*">
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="{x:Type DataGridCell}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                                <!-- Не реагирует на клики -->
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Background" Value="#F8F8F8"/>
+                                                        <Setter Property="BorderBrush" Value="Black"/>
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="TextAlignment" Value="Center"/>
+                                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="0.5" Binding="{Binding val2}" Width="5*">
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="{x:Type DataGridCell}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                                <!-- Не реагирует на клики -->
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Background" Value="#F8F8F8"/>
+                                                        <Setter Property="BorderBrush" Value="Black"/>
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="TextAlignment" Value="Center"/>
+                                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="1" Binding="{Binding val3}" Width="5*">
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="{x:Type DataGridCell}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                                <!-- Не реагирует на клики -->
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Background" Value="#F8F8F8"/>
+                                                        <Setter Property="BorderBrush" Value="Black"/>
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="TextAlignment" Value="Center"/>
+                                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="2" Binding="{Binding val4}" Width="5*">
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="{x:Type DataGridCell}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                                <!-- Не реагирует на клики -->
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Background" Value="#F8F8F8"/>
+                                                        <Setter Property="BorderBrush" Value="Black"/>
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="TextAlignment" Value="Center"/>
+                                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="4" Binding="{Binding val5}" Width="5*">
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="{x:Type DataGridCell}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                                <!-- Не реагирует на клики -->
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Background" Value="#F8F8F8"/>
+                                                        <Setter Property="BorderBrush" Value="Black"/>
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="TextAlignment" Value="Center"/>
+                                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="кГц" Binding="{Binding Metric}" Width="5*">
+                                        <DataGridTextColumn.HeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                                <Setter Property="FontStyle" Value="Italic"/>
+                                            </Style>
+                                        </DataGridTextColumn.HeaderStyle>
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="{x:Type DataGridCell}">
+                                                <Setter Property="Background" Value="#F0F0F0"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="FontStyle" Value="Italic"/>
+                                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                                <!-- Не реагирует на клики -->
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Background" Value="#F8F8F8"/>
+                                                        <Setter Property="BorderBrush" Value="Black"/>
+                                                        <Setter Property="Foreground" Value="Black"/>
+                                                        <Setter Property="BorderThickness" Value="2,2,2,2"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="TextAlignment" Value="Center"/>
+                                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </Border>
+</UserControl>

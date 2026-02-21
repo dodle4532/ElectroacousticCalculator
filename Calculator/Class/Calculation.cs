@@ -32,5 +32,10 @@ namespace Calculator.Class
         public int SpeakerId { get; set; }
         public DataTypes.SpeakerType SpeakerType { get; set; }
         public string Name { get; set; }
+        public int NoiseLevel { get; set; }
+        /// <summary>
+        /// 6 id выбранных поверхностей
+        /// </summary>
+        public List<int> Surfaces { get; set; }
     }
 }

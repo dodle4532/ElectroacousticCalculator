@@ -14,6 +14,8 @@ namespace Calculator.Class
     {
         public DbSet<Speaker> Speakers { get; set; }
         public DbSet<Calculation> Calculations { get; set; }
+        public DbSet<NoiseLevel> NoiseLevels { get; set; }
+        public DbSet<Surface> Surfaces { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -21,3 +23,6 @@ namespace Calculator.Class
         }
     }
 }
+
+
+

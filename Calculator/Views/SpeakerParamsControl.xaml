@@ -1,0 +1,184 @@
+﻿<UserControl x:Class="Calculator.Views.SpeakerParamsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="Margin" Value="5,3,5,3"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="#FF3F3F46"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                            CornerRadius="5"
+                            BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF007ACC"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#FF005A9E"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <!-- Основная рамка вокруг всего -->
+    <Border BorderBrush="#FF007ACC" 
+            BorderThickness="2" 
+            CornerRadius="8" 
+            Padding="18"
+            Background="White">
+        <!-- Тень для объема -->
+
+        <StackPanel>
+            <!-- Заголовок секции -->
+            <TextBlock Text="ПАРАМЕТРЫ ГРОМКОГОВОРИТЕЛЯ" 
+                       FontWeight="Bold" 
+                       FontSize="16" 
+                       Foreground="#FF007ACC"
+                       Margin="0,0,0,15"
+                       HorizontalAlignment="Center"/>
+
+            <!-- Выбор марки (выделяем фоном) -->
+            <Border Background="#FFF0F8FF" 
+                    CornerRadius="5" 
+                    Padding="10" 
+                    Margin="0,0,0,15"
+                    BorderBrush="#CCCCCC"
+                    BorderThickness="1" Width="484">
+                <StackPanel>
+                    <Label Content="Выберите марку громкоговорителя:" 
+                           FontWeight="SemiBold" 
+                           Foreground="#FF2D2D30"
+                           Padding="0,0,0,5"/>
+                    <ComboBox x:Name="cbModel" 
+                              DisplayMemberPath="Name" 
+                              Height="35" 
+                              FontSize="14"
+                              SelectionChanged="cbModel_SelectionChanged"/>
+                </StackPanel>
+            </Border>
+            <Button x:Name="btnSpeakerConfig" 
+        Click="setting_Click"
+        Tag="SpeakerConfig"
+        Style="{StaticResource MenuButtonStyle}" Height="37">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="⚙️" FontSize="18" Margin="0,0,10,0"/>
+                    <TextBlock Text="Настройка громкоговорителей" FontSize="14"/>
+                </StackPanel>
+            </Button>
+
+
+            <!-- Разделитель с текстом -->
+            <Grid Margin="0,5,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" 
+                        Height="1" 
+                        Background="#FF007ACC" 
+                        VerticalAlignment="Center" 
+                        Margin="0,0,10,0"/>
+                <TextBlock Grid.Column="1" 
+                           Text="характеристики" 
+                           Foreground="#FF007ACC" 
+                           FontWeight="SemiBold"
+                           FontSize="12"/>
+                <Border Grid.Column="2" 
+                        Height="1" 
+                        Background="#FF007ACC" 
+                        VerticalAlignment="Center" 
+                        Margin="10,0,0,0"/>
+            </Grid>
+
+            <!-- Сетка с параметрами -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="51"/>
+                    <ColumnDefinition Width="Auto" MinWidth="113.317"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Мощность -->
+                <Label Grid.Row="0" Grid.Column="0" 
+                       Content="Эл. мощность:" 
+                       Margin="5,5,5,5" 
+                       FontWeight="SemiBold"/>
+                <TextBox x:Name="tb_P_Vt" 
+                         Grid.Row="0" Grid.Column="1" 
+                         Margin="5,5,5,5" 
+                         IsReadOnly="True"
+                         Background="#FFF5F5F5"/>
+                <Label Grid.Row="0" Grid.Column="2" 
+                       Content="Вт" 
+                       Margin="5,5,5,5"/>
+
+                <!-- Чувствительность -->
+                <Label Grid.Row="1" Grid.Column="0" 
+                       Content="Чувствительность:" 
+                       Margin="5,5,5,5" 
+                       FontWeight="SemiBold"/>
+                <TextBox x:Name="tb_P_01" 
+                         Grid.Row="1" Grid.Column="1" 
+                         Margin="5,5,5,5" 
+                         IsReadOnly="True"
+                         Background="#FFF5F5F5"/>
+                <Label Grid.Row="1" Grid.Column="2" 
+                       Content="дБ" 
+                       Margin="5,5,5,5"/>
+
+                <!-- Угол по вертикали -->
+                <Label Grid.Row="2" Grid.Column="0" 
+                       Content="Угол верт.:" 
+                       Margin="5,5,5,5" 
+                       FontWeight="SemiBold"/>
+                <TextBox x:Name="tb_SHDN_v" 
+                         Grid.Row="2" Grid.Column="1" 
+                         Margin="5,5,5,5" 
+                         IsReadOnly="True"
+                         Background="#FFF5F5F5"/>
+                <Label Grid.Row="2" Grid.Column="2" 
+                       Content="град" 
+                       Margin="5,5,5,5"/>
+
+                <!-- Угол по горизонтали -->
+                <Label Grid.Row="3" Grid.Column="0" 
+                       Content="Угол гориз.:" 
+                       Margin="5,5,5,5" 
+                       FontWeight="SemiBold"/>
+                <TextBox x:Name="tb_SHDN_g" 
+                         Grid.Row="3" Grid.Column="1" 
+                         Margin="5,5,5,5" 
+                         IsReadOnly="True"
+                         Background="#FFF5F5F5"/>
+                <Label Grid.Row="3" Grid.Column="2" 
+                       Content="град" 
+                       Margin="5,5,5,5"/>
+            </Grid>
+
+            <!-- Маленький разделитель внизу (опционально) -->
+            <Border Height="1" 
+                    Background="#FFE0E0E0" 
+                    Margin="0,15,0,0"/>
+        </StackPanel>
+    </Border>
+</UserControl>

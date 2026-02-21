@@ -17,6 +17,7 @@ namespace Calculator.Class
         public List<Calculation> GetAllCalculations()
         {
             db.Database.EnsureCreated();
+            db.ChangeTracker.Clear();
             db.Calculations.Load();
             return db.Calculations.ToList();
         }
@@ -29,10 +30,12 @@ namespace Calculator.Class
         }
         public void Remove(Calculation calculation)
         {
-            db.Database.EnsureCreated();
-            db.Calculations.Load();
-            db.Calculations.Remove(calculation);
-            db.SaveChanges();
+            using (var db = new AppContext()) // Новый контекст
+            {
+                db.Database.EnsureCreated();
+                db.Calculations.Remove(calculation);
+                db.SaveChanges();
+            }
         }
 
         public void Update(int id, Calculation calculation)

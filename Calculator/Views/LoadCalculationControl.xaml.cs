@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Calculator.Class;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -8,18 +9,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Calculator.Class;
 
-namespace Calculator.Forms
+namespace Calculator.Views
 {
     /// <summary>
-    /// Логика взаимодействия для LoadCalculationForm.xaml
+    /// Логика взаимодействия для LoadCalculationControl.xaml
     /// </summary>
-    public partial class LoadCalculationForm : Window
+    public partial class LoadCalculationControl : UserControl
     {
         MainWindow window;
-        public LoadCalculationForm(MainWindow window)
+        public LoadCalculationControl(MainWindow window)
         {
             InitializeComponent();
             this.window = window;
@@ -32,7 +33,6 @@ namespace Calculator.Forms
             List<Calculation> list = dBHelp.GetAllCalculations();
             cbName.ItemsSource = list;
         }
-
         private void btLoad_Click(object sender, RoutedEventArgs e)
         {
             if (cbName.SelectedItem == null)
@@ -42,7 +42,7 @@ namespace Calculator.Forms
             }
             Calculation calc = (Calculation)cbName.SelectedItem;
             window.LoadCalculation(calc);
-            Close();
+            window.LoadStartPage();
         }
     }
 }
