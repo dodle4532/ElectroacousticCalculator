@@ -6,6 +6,7 @@
         Height="750" Width="1300"
         WindowStartupLocation="CenterScreen"
         Background="#FFE5F0FF"
+        WindowState="Maximized"
         Loaded="Window_Loaded">
 
     <Window.Resources>
@@ -54,7 +55,7 @@
             <ScrollViewer VerticalScrollBarVisibility="Disabled">
                 <StackPanel Margin="10">
 
-                    <TextBlock Text="ЭЛЕКТРОАКУСТИЧЕСКИЙ КАЛЬКУЛЯТОР" 
+                    <TextBlock Text="ЭЛЕКТРОАКУСТИЧЕСКИЙ КАЛЬКУЛЯТОР (ver 0.2.2)" 
                                Foreground="#FF007ACC" 
                                FontWeight="Bold" 
                                FontSize="14" 

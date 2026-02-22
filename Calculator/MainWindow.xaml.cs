@@ -145,10 +145,13 @@ namespace Calculator
                     SpeakerId = selectedSpeakerId,
                     SpeakerType = mountParamsControl.GetSpeakerType(),
                     NoiseLevel = roomParamsControl.GetCurNoiseLevel(),
-                    Surfaces = roomParamsControl.GetSelectedSurfacesId()
+                    Surfaces = roomParamsControl.GetSelectedSurfacesId(),
+                    ApprId = roomParamsControl.GetSelectedApprId(),
+                    AccConstId = roomParamsControl.GetSelectedAccConstId()
                 };
 
                 curCalculation = calculation;
+                loadCalculationControl.Update();
                 ShowSection("SaveCalculation");
             }
             catch (Exception ex)
@@ -156,7 +159,15 @@ namespace Calculator
                 MessageBox.Show($"Ошибка при сохранении: {ex.Message}");
             }
         }
-
+        /// <summary>
+        /// Установить время реверберации
+        /// </summary>
+        /// <param name="time"></param>
+        public void SetTime(double time)
+        {
+            calculatedParamsControl.SetT_R(time);
+            ShowSection("CalculatedParams");
+        }
         public Speaker GetSelectedSpeaker()
         {
             return speakerConfigControl.GetSelectedSpeaker();
@@ -179,7 +190,7 @@ namespace Calculator
 
             mountParamsControl.SetValues(calculation.H, calculation.UH, calculation.U_vh, calculation.delta);
             roomParamsControl.SetValues(calculation.USH_p, calculation.a, calculation.b_, calculation.h_,
-                                       calculation.N, calculation.a1, calculation.a2, calculation.NoiseLevel, calculation.Surfaces);
+                                       calculation.N, calculation.a1, calculation.a2, calculation.NoiseLevel, calculation.Surfaces, calculation.ApprId, calculation.AccConstId);
             calculatedParamsControl.SetValues(calculation.V, calculation.S, calculation.a_ekv,
                                             calculation.S_sr, calculation.B, calculation.t_r);
 

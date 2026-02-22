@@ -88,6 +88,11 @@ namespace Calculator.Views
             tb_t_r.Text = NumMethods.FormatDouble(tr);
         }
 
+        public void SetT_R(double tr)
+        {
+            tb_t_r.Text = NumMethods.FormatDouble(tr);
+        }
+
         public void ClearFields()
         {
             tb_V.Text = "";

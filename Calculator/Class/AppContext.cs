@@ -16,6 +16,8 @@ namespace Calculator.Class
         public DbSet<Calculation> Calculations { get; set; }
         public DbSet<NoiseLevel> NoiseLevels { get; set; }
         public DbSet<Surface> Surfaces { get; set; }
+        public DbSet<ApprSoundAbsorp> ApprSoundAbsorps { get; set; }
+        public DbSet<AcousticConstant> AcousticConstants { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

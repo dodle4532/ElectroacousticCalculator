@@ -1,0 +1,68 @@
+﻿<Window x:Class="Calculator.Forms.Test"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Calculator.Forms"
+        xmlns:helix="http://helix-toolkit.org/wpf"
+        mc:Ignorable="d"
+        Title="Test" Height="450" Width="800">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- 3D Viewport -->
+        <helix:HelixViewport3D x:Name="Viewport3D" 
+                               ZoomExtentsWhenLoaded="True"
+                               CameraRotationMode="Trackball"
+                               Grid.Column="0">
+            <helix:HelixViewport3D.DefaultCamera>
+                <PerspectiveCamera Position="5,5,10" 
+                                  LookDirection="-5,-5,-10" 
+                                  UpDirection="0,1,0"/>
+            </helix:HelixViewport3D.DefaultCamera>
+
+            <!-- Освещение -->
+            <helix:SunLight/>
+
+            <!-- Комната будет добавлена здесь программно -->
+        </helix:HelixViewport3D>
+
+        <!-- Панель параметров -->
+        <StackPanel Grid.Column="1" Margin="10">
+            <GroupBox Header="Параметры помещения" Margin="0,0,0,10">
+                <StackPanel>
+                    <TextBlock Text="Длина:"/>
+                    <TextBox x:Name="RoomLength" Text="10" 
+                             TextChanged="RoomParameter_Changed"/>
+                    <TextBlock Text="Ширина:"/>
+                    <TextBox x:Name="RoomWidth" Text="8" 
+                             TextChanged="RoomParameter_Changed"/>
+                    <TextBlock Text="Высота:"/>
+                    <TextBox x:Name="RoomHeight" Text="3" 
+                             TextChanged="RoomParameter_Changed"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Позиция громкоговорителя" Margin="0,0,0,10">
+                <StackPanel>
+                    <TextBlock Text="X:"/>
+                    <TextBox x:Name="SpeakerX" Text="0" 
+                             TextChanged="SpeakerParameter_Changed"/>
+                    <TextBlock Text="Y:"/>
+                    <TextBox x:Name="SpeakerY" Text="0" 
+                             TextChanged="SpeakerParameter_Changed"/>
+                    <TextBlock Text="Z:"/>
+                    <TextBox x:Name="SpeakerZ" Text="0" 
+                             TextChanged="SpeakerParameter_Changed"/>
+                </StackPanel>
+            </GroupBox>
+
+            <Button Content="Добавить громкоговоритель" 
+                    Click="AddSpeaker_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

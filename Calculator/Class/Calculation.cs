@@ -37,5 +37,7 @@ namespace Calculator.Class
         /// 6 id выбранных поверхностей
         /// </summary>
         public List<int> Surfaces { get; set; }
+        public int ApprId { get; set; }
+        public int AccConstId { get; set; }
     }
 }

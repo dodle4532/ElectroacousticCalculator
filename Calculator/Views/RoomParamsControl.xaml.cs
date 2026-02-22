@@ -35,6 +35,10 @@ namespace Calculator.Views
         CalculationDBHelp calculationDBHelp = new CalculationDBHelp();
         NoiseLevelDBHelp noiseLevelDBHelp = new NoiseLevelDBHelp();
         SurfaceDBHelp surfaceDBHelp = new SurfaceDBHelp();
+        AcousticConstantDBHelp acousticConstantDBHelp = new AcousticConstantDBHelp();
+        ApprSoundAbsorpDBHelp apprSoundAbsorpDBHelp = new ApprSoundAbsorpDBHelp();
+        List<AcousticConstant> acousticConstants = new List<AcousticConstant>();
+        List<ApprSoundAbsorp> apprSoundAbsorps = new List<ApprSoundAbsorp>();
         List<Surface> surfaces = new List<Surface>();
         ObservableCollection<SurfaceItem> surfaceItems = new ObservableCollection<SurfaceItem>();
         MainWindow parent;
@@ -44,13 +48,18 @@ namespace Calculator.Views
             InitializeComponent();
             noiseLevels = noiseLevelDBHelp.GetAllNoiseLevels();
             surfaces = surfaceDBHelp.GetAllSurfaces();
+            acousticConstants = acousticConstantDBHelp.GetAllAcousticConstants();
+            apprSoundAbsorps = apprSoundAbsorpDBHelp.GetAllApprSoundAbsorps();
             cbNoiseLevel.ItemsSource = noiseLevels;
+            cbAcousticConstant.ItemsSource = acousticConstants;
+            cbApprSoundAbsorp.ItemsSource = apprSoundAbsorps;
             cbBack.ItemsSource = surfaces;
             cbOpp.ItemsSource = surfaces;
             cbLeft.ItemsSource = surfaces;
             cbRight.ItemsSource = surfaces;
             cbBottom.ItemsSource = surfaces;
             cbCeil.ItemsSource = surfaces;
+
             DataGridSurface.ItemsSource = surfaceItems;
             LoadNoiseLevel(null);
             LoadSurfaces(null);
@@ -97,7 +106,7 @@ namespace Calculator.Views
 
         
 
-        public void SetValues(double ush, double a, double b, double h, double n, double a1, double a2, int noiseLevelId, List<int> surfacesList)
+        public void SetValues(double ush, double a, double b, double h, double n, double a1, double a2, int noiseLevelId, List<int> surfacesList, int ApprId, int AccConstId)
         {
             tb_USH_p.Text = NumMethods.FormatDouble(ush);
             tb_a.Text = NumMethods.FormatDouble(a);
@@ -131,6 +140,16 @@ namespace Calculator.Views
                 list.Add(surface);
             }
             LoadSurfaces(list);
+            if (ApprId != -1)
+            {
+                cbApprSoundAbsorp.SelectedItem = apprSoundAbsorps.Find(x => x.Id == ApprId);
+                RadioButton1.IsChecked = true;
+            }
+            if (AccConstId != -1)
+            {
+                cbAcousticConstant.SelectedItem = acousticConstants.Find(x => x.Id == AccConstId);
+                RadioButton2.IsChecked = true;
+            }
         }
 
         public void ClearFields()
@@ -155,6 +174,10 @@ namespace Calculator.Views
             cbRight.SelectedIndex = -1;
             cbBottom.SelectedIndex = -1;
             cbCeil.SelectedIndex = -1;
+            cbAcousticConstant.SelectedIndex = -1;
+            cbApprSoundAbsorp.SelectedIndex = -1;
+            RadioButton1.IsChecked = false;
+            RadioButton2.IsChecked = false;
         }
 
         private void cbNoiseLevel_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -177,7 +200,7 @@ namespace Calculator.Views
         {
             if (DataGridSurface.Items.Count > 0)
             {
-                double rowHeight = (DataGridSurface.ActualHeight - 30) / DataGridSurface.Items.Count; // 30 - высота заголовка
+                double rowHeight = (DataGridSurface.ActualHeight) / DataGridSurface.Items.Count;
                 DataGridSurface.RowHeight = rowHeight;
             }
         }
@@ -324,6 +347,92 @@ namespace Calculator.Views
                 res.Add(row.Id);
             }
             return res;
+        }
+
+        public int GetSelectedApprId()
+        {
+            var row = cbApprSoundAbsorp.SelectedItem as ApprSoundAbsorp;
+            if (row == null)
+            {
+                return -1;
+            }
+            return row.Id;
+        }
+        public int GetSelectedAccConstId()
+        {
+            var row = cbAcousticConstant.SelectedItem as AcousticConstant;
+            if (row == null)
+            {
+                return -1;
+            }
+            return row.Id;
+        }
+
+        private void cbNApprSoundAbsorp_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var row = cbApprSoundAbsorp.SelectedItem as ApprSoundAbsorp;
+            if (row != null)
+            {
+                tb_a1.Text = NumMethods.FormatDouble(row.A1);
+            }
+        }
+
+        private void cbNAcousticConstant_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var row = cbAcousticConstant.SelectedItem as AcousticConstant;
+            if (row != null)
+            {
+                tb_a1.Text = NumMethods.FormatDouble(row.A1);
+            }
+        }
+
+        private void RadioButton1_Checked(object sender, RoutedEventArgs e)
+        {
+            cbApprSoundAbsorp.Visibility = Visibility.Visible;
+            cbApprSoundAbsorp.IsEnabled = true;
+            cbAcousticConstant.Visibility = Visibility.Collapsed;
+            cbAcousticConstant.SelectedIndex = -1;
+            RadioButton2.IsChecked = false;
+        }
+        private void RadioButton2_Checked(object sender, RoutedEventArgs e)
+        {
+            cbAcousticConstant.Visibility = Visibility.Visible;
+            cbAcousticConstant.IsEnabled = true;
+            cbApprSoundAbsorp.Visibility = Visibility.Collapsed;
+            cbApprSoundAbsorp.SelectedIndex = -1;
+            RadioButton1.IsChecked = false;
+        }
+
+        private void tb_t_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tb_t.Text == "")
+            {
+                btnCalc.Content = "Рассчитать";
+            }
+            else
+            {
+                if (!Double.TryParse(tb_t.Text.Replace(".", ","), out double val))
+                {
+                    tb_t.Text = tb_t.Text.Substring(0, tb_t.Text.Count() - 1);
+                    return;
+                }
+                btnCalc.Content = "Сохранить";
+            }
+        }
+
+        private void btnCalc_Click(object sender, RoutedEventArgs e)
+        {
+            if (btnCalc.Content.ToString() == "Рассчитать")
+            {
+                calcGrid.IsEnabled = true;
+            }
+            else
+            {
+                if (Double.TryParse(tb_t.Text.Replace(".", ","), out double val))
+                {
+                    parent.SetTime(val);
+                }
+            }
         }
     }
 }
