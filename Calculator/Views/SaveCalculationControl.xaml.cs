@@ -33,7 +33,9 @@ namespace Calculator.Views
                 return;
             }
             window.SaveCurCalculation(tbName.Text);
-            MessageBox.Show("Успешно");
+            MessageBox.Show("Рассчет сохранен");
+            tbName.Text = "";
+            window.ShowCalculatedParams();
         }
     }
 }

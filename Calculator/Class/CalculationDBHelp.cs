@@ -38,35 +38,34 @@ namespace Calculator.Class
             }
         }
 
-        public void Update(int id, Calculation calculation)
-        {
-            db.Database.EnsureCreated();
-            db.Calculations.Load();
-            var existingCalculation = db.Calculations.FirstOrDefault(s => s.Id == id);
+        //public void Update(int id, Calculation calculation)
+        //{
+        //    db.Database.EnsureCreated();
+        //    db.Calculations.Load();
+        //    var existingCalculation = db.Calculations.FirstOrDefault(s => s.Id == id);
 
-            if (existingCalculation != null)
-            {
-                existingCalculation.H = calculation.H;
-                existingCalculation.UH = calculation.UH;
-                existingCalculation.U_vh = calculation.U_vh;
-                existingCalculation.delta = calculation.delta;
-                existingCalculation.USH_p = calculation.USH_p;
-                existingCalculation.a = calculation.a;
-                existingCalculation.b_ = calculation.b_;
-                existingCalculation.h_ = calculation.h_;
-                existingCalculation.N = calculation.N;
-                existingCalculation.a1 = calculation.a1;
-                existingCalculation.a2 = calculation.a2;
-                existingCalculation.V = calculation.V;
-                existingCalculation.S = calculation.S;
-                existingCalculation.a_ekv = calculation.a_ekv;
-                existingCalculation.S_sr = calculation.S_sr;
-                existingCalculation.B = calculation.B;
-                existingCalculation.t_r = calculation.t_r;
-                existingCalculation.SpeakerId = calculation.SpeakerId;
-                existingCalculation.SpeakerType = calculation.SpeakerType;
-                db.SaveChanges();
-            }
-        }
+        //    if (existingCalculation != null)
+        //    {
+        //        existingCalculation.H = calculation.H;
+        //        existingCalculation.UH = calculation.UH;
+        //        existingCalculation.U_vh = calculation.U_vh;
+        //        existingCalculation.delta = calculation.delta;
+        //        existingCalculation.USH_p = calculation.USH_p;
+        //        existingCalculation.a = calculation.a;
+        //        existingCalculation.b_ = calculation.b_;
+        //        existingCalculation.h_ = calculation.h_;
+        //        existingCalculation.N = calculation.N;
+        //        existingCalculation.a1 = calculation.a1;
+        //        existingCalculation.a2 = calculation.a2;
+        //        existingCalculation.V = calculation.V;
+        //        existingCalculation.S = calculation.S;
+        //        existingCalculation.a_ekv = calculation.a_ekv;
+        //        existingCalculation.S_sr = calculation.S_sr;
+        //        existingCalculation.B = calculation.B;
+        //        existingCalculation.t_r = calculation.t_r;
+        //        existingCalculation.SpeakerId = calculation.SpeakerId;
+        //        existingCalculation.SpeakerType = calculation.SpeakerType;
+        //        db.SaveChanges();
+        //    }
     }
 }

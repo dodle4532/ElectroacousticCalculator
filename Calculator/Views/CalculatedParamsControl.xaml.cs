@@ -20,7 +20,7 @@ namespace Calculator.Views
             parent = mainWindow;
         }
 
-        private void btnCalc_Click(object sender, RoutedEventArgs e)
+        public void btnCalc_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -42,12 +42,11 @@ namespace Calculator.Views
                 double h = parent.Get_h();
                 double N = parent.GetN();
                 double a1 = parent.GetA1();
-                double a2 = parent.GetA2();
 
                 // Проверка заполнения полей
                 if (H == 0 || UH == 0 || U_vh == 0 || delta == 0 ||
                     USH_p == 0 || a == 0 || b == 0 || h == 0 ||
-                    N == 0 || a1 == 0 || a2 == 0)
+                    N == 0 || a1 == 0)
                 {
                     MessageBox.Show("Заполните все поля");
                     return;
@@ -56,7 +55,7 @@ namespace Calculator.Views
                 // Расчеты
                 double V = a * b * h;
                 double S = 2 * (a * b + a * h + b * h);
-                double a_ekv = 1 / S * ((S - 0.17 * N) * a1 + 0.17 * N * a2);
+                double a_ekv = 1 / S * ((S - 0.17 * N) * a1 + 0.17 * N);
                 double S_sr = S * a_ekv;
                 double B = a_ekv * S / (1 - a_ekv);
                 double t_r = 0.164 * V / (-S * Math.Log(1 - a_ekv));

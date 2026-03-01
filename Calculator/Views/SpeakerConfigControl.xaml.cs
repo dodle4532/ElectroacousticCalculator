@@ -39,7 +39,7 @@ namespace Calculator.Views
             public string Metric { get; set; }
 
         }
-        string[] rows = { "Чувствительность громкоговорителя", "Угол раскрыва (-6дБ) по вертикали", "Угол раскрыва (-6дБ) по горизонтали" };
+        string[] rows = { "Чувствительность громкоговорителя (1Вт/м)", "Угол раскрыва (-6дБ) по вертикали (ШДН на -6дБ)", "Угол раскрыва (-6дБ) по горизонтали (ШДН на -6дБ)" };
         string[] metrics = { "дБ", "Град", "Град" };
         public SpeakerConfigControl(MainWindow window)
         {
@@ -63,27 +63,12 @@ namespace Calculator.Views
             cbName.ItemsSource = speakers;
         }
 
-        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
+        public void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            //curSpeakerId = -1;
             StartEdit();
-            //Speaker speaker = new Speaker();
-            //speaker.Name = tbName.Text;
-            //if (speakers.Select(x => x.Name).Contains(tbName.Text))
-            //{
-            //    MessageBox.Show("Уже есть громкоговоритель с таким именем");
-            //    return;
-            //}
-            //speaker.P_Vt = Convert.ToDouble(tb_P_Vt.Text);
-            //speaker.P_01 = Convert.ToDouble(tb_P_01.Text);
-            //speaker.SHDN_v = Convert.ToDouble(tb_SHDN_v.Text);
-            //speaker.SHDN_g = Convert.ToDouble(tb_SHDN_g.Text);
-            //dBHelper.Add(speaker);
-            //MessageBox.Show("Успешно");
-            //LoadList();
         }
 
-        private void ButtonDel_Click(object sender, RoutedEventArgs e)
+        public void ButtonDel_Click(object sender, RoutedEventArgs e)
         {
             Speaker speaker = (Speaker)cbName.SelectedItem;
             if (speaker == null)
@@ -91,7 +76,7 @@ namespace Calculator.Views
                 MessageBox.Show("Выберите громкоговоритель");
             }
             dBHelper.Remove(speaker);
-            MessageBox.Show("Успешно");
+            MessageBox.Show("Громкоговоритель удален");
             parent.UpdateSpeakers();
             LoadList();
         }
@@ -101,9 +86,10 @@ namespace Calculator.Views
         {
             cbName.Visibility = Visibility.Collapsed;
             tbName.Visibility = Visibility.Visible;
-            ButtonBack.Visibility = Visibility.Visible;
-            ButtonAdd.Visibility = Visibility.Collapsed;
-            ButtonDel.Visibility = Visibility.Collapsed;
+            tbName.Text = "";
+            parent.ButtonBack.Visibility = Visibility.Visible;
+            parent.ButtonAdd.Visibility = Visibility.Collapsed;
+            parent.ButtonDel.Visibility = Visibility.Collapsed;
             //if (curSpeakerId != -1)
             //{
             //    LoadCurSpeaker();
@@ -114,14 +100,14 @@ namespace Calculator.Views
             Clear();
         }
 
-        private void ButtonBack_Click(object sender, RoutedEventArgs e)
+        public void ButtonBack_Click(object sender, RoutedEventArgs e)
         {
             tbName.Visibility = Visibility.Collapsed;
             cbName.Visibility = Visibility.Visible;
             //cbName.SelectedIndex = 0;
-            ButtonAdd.Visibility = Visibility.Visible;
-            ButtonDel.Visibility = Visibility.Visible;
-            ButtonBack.Visibility = Visibility.Collapsed;
+            parent.ButtonAdd.Visibility = Visibility.Visible;
+            parent.ButtonDel.Visibility = Visibility.Visible;
+            parent.ButtonBack.Visibility = Visibility.Collapsed;
             if (curSpeakerId != -1)
             {
                 LoadCurSpeaker();
@@ -170,47 +156,7 @@ namespace Calculator.Views
             if (curSpeakerId != -1)
             {
                 Speaker speaker = speakers.Find(x => x.Id == curSpeakerId);
-                tbName.Text = speaker.Name;
-                tb_P_Vt.Text = NumMethods.FormatDouble(speaker.P_Vt);
-                List<DataGridItem> list = new List<DataGridItem>();
-                for (int i = 0; i < 3; ++i)
-                {
-                    DataGridItem item = new DataGridItem();
-                    item.Name = rows[i];
-                    item.Metric = metrics[i];
-                    switch (i)
-                    {
-                        case 0:
-                            {
-                                item.Value1 = NumMethods.FormatDouble(speaker.P_01[0]);
-                                item.Value2 = NumMethods.FormatDouble(speaker.P_01[1]);
-                                item.Value3 = NumMethods.FormatDouble(speaker.P_01[2]);
-                                item.Value4 = NumMethods.FormatDouble(speaker.P_01[3]);
-                                item.Value5 = NumMethods.FormatDouble(speaker.P_01[4]);
-                                break;
-                            }
-                        case 1:
-                            {
-                                item.Value1 = NumMethods.FormatDouble(speaker.SHDN_v[0]);
-                                item.Value2 = NumMethods.FormatDouble(speaker.SHDN_v[1]);
-                                item.Value3 = NumMethods.FormatDouble(speaker.SHDN_v[2]);
-                                item.Value4 = NumMethods.FormatDouble(speaker.SHDN_v[3]);
-                                item.Value5 = NumMethods.FormatDouble(speaker.SHDN_v[4]);
-                                break;
-                            }
-                        case 2:
-                            {
-                                item.Value1 = NumMethods.FormatDouble(speaker.SHDN_g[0]);
-                                item.Value2 = NumMethods.FormatDouble(speaker.SHDN_g[1]);
-                                item.Value3 = NumMethods.FormatDouble(speaker.SHDN_g[2]);
-                                item.Value4 = NumMethods.FormatDouble(speaker.SHDN_g[3]);
-                                item.Value5 = NumMethods.FormatDouble(speaker.SHDN_g[4]);
-                                break;
-                            }
-                    }
-                    list.Add(item);
-                }
-                DataGrid.ItemsSource = list;
+                SetSpeaker(speaker);
             }
         }
 
@@ -218,7 +164,50 @@ namespace Calculator.Views
         private Label[] leftLabels;
         private Label[] rightLabels;
 
-
+        public void SetSpeaker(Speaker speaker)
+        {
+            tbName.Text = speaker.Name;
+            tb_P_Vt.Text = NumMethods.FormatDouble(speaker.P_Vt);
+            List<DataGridItem> list = new List<DataGridItem>();
+            for (int i = 0; i < 3; ++i)
+            {
+                DataGridItem item = new DataGridItem();
+                item.Name = rows[i];
+                item.Metric = metrics[i];
+                switch (i)
+                {
+                    case 0:
+                        {
+                            item.Value1 = NumMethods.FormatDouble(speaker.P_01[0]);
+                            item.Value2 = NumMethods.FormatDouble(speaker.P_01[1]);
+                            item.Value3 = NumMethods.FormatDouble(speaker.P_01[2]);
+                            item.Value4 = NumMethods.FormatDouble(speaker.P_01[3]);
+                            item.Value5 = NumMethods.FormatDouble(speaker.P_01[4]);
+                            break;
+                        }
+                    case 1:
+                        {
+                            item.Value1 = NumMethods.FormatDouble(speaker.SHDN_v[0]);
+                            item.Value2 = NumMethods.FormatDouble(speaker.SHDN_v[1]);
+                            item.Value3 = NumMethods.FormatDouble(speaker.SHDN_v[2]);
+                            item.Value4 = NumMethods.FormatDouble(speaker.SHDN_v[3]);
+                            item.Value5 = NumMethods.FormatDouble(speaker.SHDN_v[4]);
+                            break;
+                        }
+                    case 2:
+                        {
+                            item.Value1 = NumMethods.FormatDouble(speaker.SHDN_g[0]);
+                            item.Value2 = NumMethods.FormatDouble(speaker.SHDN_g[1]);
+                            item.Value3 = NumMethods.FormatDouble(speaker.SHDN_g[2]);
+                            item.Value4 = NumMethods.FormatDouble(speaker.SHDN_g[3]);
+                            item.Value5 = NumMethods.FormatDouble(speaker.SHDN_g[4]);
+                            break;
+                        }
+                }
+                list.Add(item);
+            }
+            DataGrid.ItemsSource = list;
+        }
 
 
         private void ClearEditGrid()
@@ -243,99 +232,13 @@ namespace Calculator.Views
         }
 
 
-        private void ButtonSave_Click(object sender, RoutedEventArgs e)
+        public void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            DataGrid.CommitEdit(DataGridEditingUnit.Row, true);
-            var allValues = new List<string>();
-            List<DataGridItem> list = (List<DataGridItem>)DataGrid.ItemsSource;
-            List<double[]> parametrs = new List<double[]>();
-            string name = tbName.Visibility == Visibility.Visible ? tbName.Text : cbName.Text;
-            if (name == "")
+            Speaker speaker = GetCurSpeaker();
+            if (speaker == null)
             {
-                MessageBox.Show("Введите наименование громкоговорителя");
                 return;
             }
-            if ((tbName.Visibility == Visibility.Visible || name != speakers.Find(x => x.Id == curSpeakerId).Name) && speakers.Select(x => x.Name).Contains(name))
-            {
-                MessageBox.Show("Уже есть громкоговоритель с таким именем");
-                return;
-            }
-            if (!Double.TryParse(tb_P_Vt.Text.Replace(".", ","), out double P_Vt))
-            {
-                MessageBox.Show("Неверный формат для мощности");
-                return;
-            }
-            if (P_Vt <= 0 && P_Vt > 500)
-            {
-                MessageBox.Show("Мощность громкоговорителя может находиться в пределах: >0 <=500Вт");
-                return;
-            }
-            if (list[0].Value3 == "")
-            {
-                MessageBox.Show("Заполните " + rows[0] + " для частоты 1 кГц");
-                return;
-            }
-            if (list[1].Value5 == "")
-            {
-                MessageBox.Show("Заполните " + rows[1] + " для частоты 4 кГц");
-                return;
-            }
-            if (list[2].Value5 == "")
-            {
-                MessageBox.Show("Заполните " + rows[2] + " для частоты 4 кГц");
-                return;
-            }
-            foreach (DataGridItem item in list)
-            {
-                if (!Double.TryParse(item.Value1 == "" ? "0" : item.Value1.Replace(".", ","), out double val1))
-                {
-                    MessageBox.Show("Неверный формат для одной из ячеек");
-                    return;
-                }
-                if (!Double.TryParse(item.Value2 == "" ? "0" : item.Value2.Replace(".", ","), out double val2))
-                {
-                    MessageBox.Show("Неверный формат для одной из ячеек");
-                    return;
-                }
-                if (!Double.TryParse(item.Value3 == "" ? "0" : item.Value3.Replace(".", ","), out double val3))
-                {
-                    MessageBox.Show("Неверный формат для одной из ячеек");
-                    return;
-                }
-                if (!Double.TryParse(item.Value4 == "" ? "0" : item.Value4.Replace(".", ","), out double val4))
-                {
-                    MessageBox.Show("Неверный формат для одной из ячеек");
-                    return;
-                }
-                if (!Double.TryParse(item.Value5 == "" ? "0" : item.Value5.Replace(".", ","), out double val5))
-                {
-                    MessageBox.Show("Неверный формат для одной из ячеек");
-                    return;
-                }
-                parametrs.Add(new double[] { val1, val2, val3, val4, val5 });
-                if (parametrs.Count == 1)
-                {
-                    if ((val1 < 1 || val1 > 140) ||(val2 < 1 || val2 > 140) ||(val3 < 1 || val3 > 140) ||(val4 < 1 || val4 > 140) ||(val5 < 1 || val5 > 140))
-                    {
-                        MessageBox.Show("Чувствительность громкоговорителя не должна превышать 140дБ");
-                        return;
-                    }
-                }
-                if (parametrs.Count == 2 || parametrs.Count == 3)
-                {
-                    if ((val1 < 10 || val1 > 360) ||(val2 < 10 || val2 > 360) ||(val3 < 10 || val3 > 360) ||(val4 < 10 || val4 > 360) ||(val5 < 10 || val5 > 360))
-                    {
-                        MessageBox.Show("Угол раскрыва должен находится в границах >= 10Град и <= 360Град");
-                        return;
-                    }
-                }
-            }
-            Speaker speaker = new Speaker();
-            speaker.Name = name;
-            speaker.P_Vt = P_Vt;
-            speaker.P_01 = parametrs[0];
-            speaker.SHDN_v = parametrs[1];
-            speaker.SHDN_g = parametrs[2];
             if (tbName.Visibility == Visibility.Visible)
             {
                 dBHelper.Add(speaker);
@@ -346,7 +249,7 @@ namespace Calculator.Views
                 dBHelper.Update(curSpeakerId, speaker);
             }
             parent.UpdateSpeakers();
-            MessageBox.Show("Успешно");
+            MessageBox.Show("Параметры сохранены");
             ButtonBack_Click(sender, e);
         }
 
@@ -394,7 +297,7 @@ namespace Calculator.Views
         // Обработчик нажатия клавиш в DataGrid
         private void UserControl_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Tab)
+            if (e.Key == Key.Tab || e.Key == Key.Enter)
             {
                 e.Handled = true; // Отменяем стандартное поведение
 
@@ -558,6 +461,112 @@ namespace Calculator.Views
                 return true;
             }
             return false;
+        }
+
+        public void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (curSpeakerId == -1 || tbName.Visibility == Visibility.Visible)
+            {
+                MessageBox.Show("Выберите громкоговоритель");
+                return;
+            }
+            parent.NextSection();
+        }
+
+        public Speaker GetCurSpeaker()
+        {
+            DataGrid.CommitEdit(DataGridEditingUnit.Row, true);
+            var allValues = new List<string>();
+            List<DataGridItem> list = (List<DataGridItem>)DataGrid.ItemsSource;
+            List<double[]> parametrs = new List<double[]>();
+            string name = tbName.Visibility == Visibility.Visible ? tbName.Text : cbName.Text;
+            if (name == "")
+            {
+                MessageBox.Show("Введите наименование громкоговорителя");
+                return null;
+            }
+            if ((tbName.Visibility == Visibility.Visible || name != speakers.Find(x => x.Id == curSpeakerId).Name) && speakers.Select(x => x.Name).Contains(name))
+            {
+                MessageBox.Show("Уже есть громкоговоритель с таким именем");
+                return null;
+            }
+            if (!Double.TryParse(tb_P_Vt.Text.Replace(".", ","), out double P_Vt))
+            {
+                MessageBox.Show("Неверный формат для мощности");
+                return null;
+            }
+            if (P_Vt <= 0 && P_Vt > 500)
+            {
+                MessageBox.Show("Мощность громкоговорителя может находиться в пределах: >0 <=500Вт");
+                return null;
+            }
+            if (list[0].Value3 == "")
+            {
+                MessageBox.Show("Заполните " + rows[0] + " для частоты 1 кГц");
+                return null;
+            }
+            if (list[1].Value5 == "")
+            {
+                MessageBox.Show("Заполните " + rows[1] + " для частоты 4 кГц");
+                return null;
+            }
+            if (list[2].Value5 == "")
+            {
+                MessageBox.Show("Заполните " + rows[2] + " для частоты 4 кГц");
+                return null;
+            }
+            foreach (DataGridItem item in list)
+            {
+                if (!Double.TryParse(item.Value1 == "" ? "0" : item.Value1.Replace(".", ","), out double val1))
+                {
+                    MessageBox.Show("Неверный формат для одной из ячеек");
+                    return null;
+                }
+                if (!Double.TryParse(item.Value2 == "" ? "0" : item.Value2.Replace(".", ","), out double val2))
+                {
+                    MessageBox.Show("Неверный формат для одной из ячеек");
+                    return null;
+                }
+                if (!Double.TryParse(item.Value3 == "" ? "0" : item.Value3.Replace(".", ","), out double val3))
+                {
+                    MessageBox.Show("Неверный формат для одной из ячеек");
+                    return null;
+                }
+                if (!Double.TryParse(item.Value4 == "" ? "0" : item.Value4.Replace(".", ","), out double val4))
+                {
+                    MessageBox.Show("Неверный формат для одной из ячеек");
+                    return null;
+                }
+                if (!Double.TryParse(item.Value5 == "" ? "0" : item.Value5.Replace(".", ","), out double val5))
+                {
+                    MessageBox.Show("Неверный формат для одной из ячеек");
+                    return null;
+                }
+                parametrs.Add(new double[] { val1, val2, val3, val4, val5 });
+                if (parametrs.Count == 1)
+                {
+                    if ((val1 < 1 || val1 > 140) || (val2 < 1 || val2 > 140) || (val3 < 1 || val3 > 140) || (val4 < 1 || val4 > 140) || (val5 < 1 || val5 > 140))
+                    {
+                        MessageBox.Show("Чувствительность громкоговорителя не должна превышать 140дБ");
+                        return null;
+                    }
+                }
+                if (parametrs.Count == 2 || parametrs.Count == 3)
+                {
+                    if ((val1 < 10 || val1 > 360) || (val2 < 10 || val2 > 360) || (val3 < 10 || val3 > 360) || (val4 < 10 || val4 > 360) || (val5 < 10 || val5 > 360))
+                    {
+                        MessageBox.Show("Угол раскрыва должен находится в границах >= 10Град и <= 360Град");
+                        return null;
+                    }
+                }
+            }
+            Speaker speaker = new Speaker();
+            speaker.Name = name;
+            speaker.P_Vt = P_Vt;
+            speaker.P_01 = parametrs[0];
+            speaker.SHDN_v = parametrs[1];
+            speaker.SHDN_g = parametrs[2];
+            return speaker;
         }
     }
 }

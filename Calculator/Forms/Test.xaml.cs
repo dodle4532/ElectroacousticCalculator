@@ -16,6 +16,7 @@ namespace Calculator.Forms
         private ModelVisual3D speakerVisual;
         private Point3D speakerPosition;
         private bool isDragging = false;
+        bool isLoaded = false;
         private TranslateTransform3D speakerTransform;
         private double speakerHeight = 0.3; // Высота динамика
 
@@ -27,12 +28,13 @@ namespace Calculator.Forms
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            InitializeRoom();
             CreateSpeaker();
+            InitializeRoom();
             SetupDragHandling();
 
             // Центрируем камеру на комнате
             Viewport3D.ZoomExtents();
+            isLoaded = true;
         }
 
         private void InitializeRoom()
@@ -47,44 +49,57 @@ namespace Calculator.Forms
             double width = double.Parse(RoomWidth.Text);
             double height = double.Parse(RoomHeight.Text);
 
-            // Полупрозрачный материал для стен
-            var wallMaterial = new DiffuseMaterial(new SolidColorBrush(Color.FromArgb(64, 150, 150, 150)));
-            // Материал для пола (чуть более видимый)
-            var floorMaterial = new DiffuseMaterial(new SolidColorBrush(Color.FromArgb(128, 100, 100, 100)));
+            // Материал для стен (чуть более видимый)
+            var wallMaterial = new DiffuseMaterial(new SolidColorBrush(Color.FromArgb(60, 150, 150, 150)));
 
-            // Пол (немного приподнят для видимости)
-            modelGroup.Children.Add(CreateBox(new Point3D(0, -height / 2, 0), length, 0.05, width, floorMaterial));
+            // ПОЛ - делаем очень прозрачным и с двусторонним рендерингом
+            var floor = CreateBox(new Point3D(0, -height / 2, 0), length, 0.05, width, wallMaterial);
+            modelGroup.Children.Add(floor);
 
-            // Потолок
-            modelGroup.Children.Add(CreateBox(new Point3D(0, height / 2, 0), length, 0.05, width, wallMaterial));
+            // Потолок - убираем временно
+             modelGroup.Children.Add(CreateBox(new Point3D(0, height / 2, 0), length, 0.05, width, wallMaterial));
 
             // Задняя стена (-Z)
-            modelGroup.Children.Add(CreateBox(new Point3D(0, 0, -width / 2), length, height, 0.05, wallMaterial));
+            var backWall = CreateBox(new Point3D(0, 0, -width / 2), length, height, 0.05, wallMaterial);
+            backWall.BackMaterial = wallMaterial;
+            modelGroup.Children.Add(backWall);
 
             // Передняя стена (+Z)
-            modelGroup.Children.Add(CreateBox(new Point3D(0, 0, width / 2), length, height, 0.05, wallMaterial));
+            var frontWall = CreateBox(new Point3D(0, 0, width / 2), length, height, 0.05, wallMaterial);
+            frontWall.BackMaterial = wallMaterial;
+            modelGroup.Children.Add(frontWall);
 
             // Левая стена (-X)
-            modelGroup.Children.Add(CreateBox(new Point3D(-length / 2, 0, 0), 0.05, height, width, wallMaterial));
+            var leftWall = CreateBox(new Point3D(-length / 2, 0, 0), 0.05, height, width, wallMaterial);
+            leftWall.BackMaterial = wallMaterial;
+            modelGroup.Children.Add(leftWall);
 
             // Правая стена (+X)
-            modelGroup.Children.Add(CreateBox(new Point3D(length / 2, 0, 0), 0.05, height, width, wallMaterial));
+            var rightWall = CreateBox(new Point3D(length / 2, 0, 0), 0.05, height, width, wallMaterial);
+            rightWall.BackMaterial = wallMaterial;
+            modelGroup.Children.Add(rightWall);
 
             roomVisual.Content = modelGroup;
             Viewport3D.Children.Add(roomVisual);
 
-            // Добавляем сетку на пол для лучшей ориентации
+            // Добавляем сетку ПОД полом для ориентации
             var grid = new GridLinesVisual3D
             {
                 Width = length,
                 Length = width,
                 MinorDistance = 1,
                 MajorDistance = 5,
-                Thickness = 1,
-                //Color = Colors.LightGray
+                Thickness = 1
             };
-            grid.Transform = new TranslateTransform3D(0, -height / 2 + 0.05, 0);
+            grid.Transform = new TranslateTransform3D(0, -height / 2 - 0.1, 0); // Сетка под полом
             //Viewport3D.Children.Add(grid);
+
+            // Добавляем координатные оси для ориентации
+            var axes = new CoordinateSystemVisual3D
+            {
+                ArrowLengths = 1
+            };
+            Viewport3D.Children.Add(axes);
         }
 
         private GeometryModel3D CreateBox(Point3D center, double xLength, double yLength, double zLength, Material material)
@@ -216,7 +231,8 @@ namespace Calculator.Forms
             var speakerModel = new GeometryModel3D
             {
                 Geometry = mesh,
-                Material = new DiffuseMaterial(Brushes.Red)
+                Material = new DiffuseMaterial(Brushes.Red),
+                BackMaterial = new DiffuseMaterial(Brushes.Red)
             };
 
             // Добавляем черную окантовку для лучшей видимости
@@ -242,7 +258,7 @@ namespace Calculator.Forms
             double roomLength = double.Parse(RoomLength.Text);
             double roomWidth = double.Parse(RoomWidth.Text);
 
-            speakerPosition = new Point3D(0, -roomHeight / 2 + speakerHeight / 2, 0);
+            speakerPosition = new Point3D(0, 0, roomWidth / 2);
             UpdateSpeakerPosition();
         }
 
@@ -362,9 +378,10 @@ namespace Calculator.Forms
 
                         double x = Math.Max(-length, Math.Min(length, hit.Value.X));
                         double z = Math.Max(-width, Math.Min(width, hit.Value.Z));
+                        double y = Math.Max(-height, Math.Min(height, hit.Value.Y));
 
                         // Позволяем двигать и по Y (вверх/вниз) с ограничениями
-                        double y = Math.Max(-height + speakerHeight / 2, Math.Min(height - speakerHeight / 2, hit.Value.Y));
+                        //double y = Math.Max(-height + speakerHeight / 2, Math.Min(height - speakerHeight / 2, hit.Value.Y));
 
                         speakerPosition = new Point3D(x, y, z);
                         UpdateSpeakerPosition();
@@ -401,7 +418,7 @@ namespace Calculator.Forms
 
         private void RoomParameter_Changed(object sender, RoutedEventArgs e)
         {
-            if (IsLoaded)
+            if (isLoaded)
             {
                 InitializeRoom();
 
@@ -413,7 +430,7 @@ namespace Calculator.Forms
 
         private void SpeakerParameter_Changed(object sender, RoutedEventArgs e)
         {
-            if (IsLoaded && double.TryParse(SpeakerX.Text, out double x) &&
+            if (isLoaded && double.TryParse(SpeakerX.Text, out double x) &&
                 double.TryParse(SpeakerY.Text, out double y) &&
                 double.TryParse(SpeakerZ.Text, out double z))
             {

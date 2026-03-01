@@ -12,5 +12,6 @@ namespace Calculator.Class
         public int Id {  get; set; }
         public string Name { get; set; }
         public int Ush { get; set; }
+        public string Sp { get; set; }
     }
 }

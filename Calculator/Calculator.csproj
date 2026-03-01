@@ -12,9 +12,12 @@
     <None Remove="Image\add.png" />
     <None Remove="Image\check.png" />
     <None Remove="Image\close.png" />
+    <None Remove="Image\copy.png" />
     <None Remove="Image\cross.png" />
     <None Remove="Image\delete.png" />
     <None Remove="Image\edit.png" />
+    <None Remove="Image\forward.png" />
+    <None Remove="Image\paste.png" />
     <None Remove="Image\return.png" />
     <None Remove="Image\save.png" />
   </ItemGroup>
@@ -35,9 +38,12 @@
     <Resource Include="Image\add.png" />
     <Resource Include="Image\check.png" />
     <Resource Include="Image\close.png" />
+    <Resource Include="Image\copy.png" />
     <Resource Include="Image\cross.png" />
     <Resource Include="Image\delete.png" />
     <Resource Include="Image\edit.png" />
+    <Resource Include="Image\forward.png" />
+    <Resource Include="Image\paste.png" />
     <Resource Include="Image\return.png" />
     <Resource Include="Image\save.png" />
   </ItemGroup>

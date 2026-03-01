@@ -4,71 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Calculator.Views"
-             mc:Ignorable="d" PreviewKeyDown="UserControl_PreviewKeyDown" FontSize="16">
+             mc:Ignorable="d" PreviewKeyDown="UserControl_PreviewKeyDown" FontSize="16" Height="426">
     <Border BorderBrush="#FF007ACC" 
         BorderThickness="2" 
         CornerRadius="5" 
-        Padding="15">
-        <StackPanel>
-            <ToolBarTray DockPanel.Dock="Top" Background="#FFF5F9FF" Grid.ColumnSpan="3" Width="717">
-                <ToolBar Background="#FFF5F9FF" IsOverflowOpen="False" Cursor="">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <!-- Кнопки слева, друг под другом -->
-                        <Button x:Name="ButtonAdd" Grid.Row="0" Grid.Column="0"
-ToolTip="Добавить громкоговоритель" 
-Visibility="Visible" 
-Background="Transparent" 
-BorderBrush="Transparent" 
-Click="ButtonAdd_Click"
-Margin="0,0,0,2">
-                            <Image Source="/Image/add.png" Width="24" Height="24"/>
-                        </Button>
-
-                        <Button x:Name="ButtonBack" Grid.Row="0" Grid.Column="0"
-ToolTip="Назад" 
-Visibility="Collapsed" 
-Background="Transparent" 
-BorderBrush="Transparent" 
-Click="ButtonBack_Click"
-Margin="0,0,0,2" HorizontalAlignment="Left" Width="28">
-                            <Image Source="/Image/return.png" Width="25" Height="24"/>
-                        </Button>
-
-                        <!-- Кнопка Save - справа от них, на уровне первой строки -->
-                        <Button x:Name="ButtonDel" Grid.Row="0" Grid.Column="1"
-ToolTip="Удалить" 
-Visibility="Visible" 
-Background="Transparent" 
-BorderBrush="Transparent" 
-Click="ButtonDel_Click"
-HorizontalAlignment="Right"
-Margin="38,0,0,2">
-                            <Image Source="/Image/delete.png" Width="24" Height="24"/>
-                        </Button>
-                        <Button x:Name="ButtonSave" Grid.Row="0" Grid.Column="1"
-ToolTip="Сохранить" 
-Visibility="Visible" 
-Background="Transparent" 
-BorderBrush="Transparent" 
-Click="ButtonSave_Click"
-HorizontalAlignment="Left"
-Margin="8,0,0,2">
-                            <Image Source="/Image/save.png" Width="24" Height="24"/>
-                        </Button>
-                    </Grid>
-                </ToolBar>
-            </ToolBarTray>
-            <TextBlock Text="ПАРАМЕТРЫ ГРОМКОГОВОРИТЕЛЯ" 
+        Padding="15" Width="876">
+        <StackPanel Margin="0,0,0,-7">
+            <TextBlock Text="НАСТРОЙКА ПАРАМЕТРОВ ГРОМКОГОВОРИТЕЛЯ" 
            FontWeight="Bold" 
            FontSize="16" 
            Foreground="#FF007ACC"
@@ -78,7 +20,7 @@ Margin="8,0,0,2">
                 CornerRadius="5" 
               BorderBrush="#FF007ACC" 
               BorderThickness="1"
-              Padding="10" Width="722">
+              Padding="10" Width="800" Height="296">
                 <Grid>
                     <Grid x:Name="MainGrid" Visibility="Visible">
                         <Grid.ColumnDefinitions>
@@ -100,11 +42,11 @@ Margin="8,0,0,2">
                         </Grid.RowDefinitions>
 
                         <Label Content="Наименование громкоговорителя" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left"  Height="38" Width="263" Grid.ColumnSpan="2" Margin="15,-2,0,0"/>
-                        <Label Content="Электрическая (подводимая) мощность:" FontWeight="Bold" HorizontalAlignment="Left" Margin="15,18,0,0" VerticalAlignment="Top" Grid.Row="7" Height="39" Width="330" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                        <Label Content="Электрическая (подводимая) мощность:" FontWeight="DemiBold" HorizontalAlignment="Left" Margin="15,18,0,0" VerticalAlignment="Top" Grid.Row="7" Height="39" Width="330" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
                         <TextBox x:Name="tbName" Visibility="Collapsed" Style="{StaticResource {x:Type TextBox}}" VerticalContentAlignment="Center" Height="30" Margin="15,0,18,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Grid.ColumnSpan="3" Cursor=""/>
-                        <ComboBox Background="Black" x:Name="cbName" Style="{StaticResource {x:Type ComboBox}}" SelectionChanged="cbName_SelectionChanged" Visibility="Visible" VerticalContentAlignment="Center" Height="30" Margin="15,0,0,0" Grid.Row="1" HorizontalContentAlignment="Left" ItemsSource="{Binding Speaker}" DisplayMemberPath="Name"  VerticalAlignment="Center" Grid.ColumnSpan="3" HorizontalAlignment="Left" Width="667"/>
-                        <TextBox x:Name="tb_P_Vt" Style="{StaticResource {x:Type TextBox}}" HorizontalContentAlignment="Center" Grid.Column="1" VerticalContentAlignment="Center" Margin="351,26,0,28" Grid.Row="7" TextWrapping="Wrap" Text="" HorizontalAlignment="Left" Width="49" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-                        <Label Content="Вт" FontStyle="Italic" Margin="0,24,0,0" FontWeight="Bold" VerticalAlignment="Top" Grid.Row="7" Height="28" Grid.Column="2" HorizontalAlignment="Center" Width="34" Grid.RowSpan="2"/>
+                        <ComboBox Background="Black" x:Name="cbName" Style="{StaticResource {x:Type ComboBox}}" SelectionChanged="cbName_SelectionChanged" Visibility="Visible" VerticalContentAlignment="Center" Height="30" Margin="15,0,0,0" Grid.Row="1" HorizontalContentAlignment="Left" ItemsSource="{Binding Speaker}" DisplayMemberPath="Name"  VerticalAlignment="Center" Grid.ColumnSpan="3" HorizontalAlignment="Left" Width="745"/>
+                        <TextBox x:Name="tb_P_Vt" Style="{StaticResource {x:Type TextBox}}" HorizontalContentAlignment="Center" Grid.Column="2" VerticalContentAlignment="Center" Margin="60,24,0,30" Grid.Row="7" TextWrapping="Wrap" Text="" HorizontalAlignment="Left" Width="54" Grid.RowSpan="2"/>
+                        <Label Content="Вт" FontStyle="Italic" Margin="128,20,0,0" FontWeight="DemiBold" VerticalAlignment="Top" Grid.Row="7" Height="28" Grid.Column="2" HorizontalAlignment="Left" Width="34" Grid.RowSpan="2"/>
                         <DataGrid Style="{StaticResource {x:Type DataGrid}}" x:Name="DataGrid" FontSize="16" Loaded="DataGrid_Loaded" RowHeaderWidth="0" SelectionMode="Single" CellEditEnding="DataGrid_CellEditEnding"
           BorderThickness="1"
           IsSynchronizedWithCurrentItem="False"
@@ -154,7 +96,7 @@ Margin="8,0,0,2">
                             </DataGrid.ColumnHeaderStyle>
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="" Width="0" Visibility="Collapsed"/>
-                                <DataGridTextColumn Header="Частотный диапозон" Binding="{Binding Name}" Width="6.5*">
+                                <DataGridTextColumn Header="Частотный диапозон" Binding="{Binding Name}" Width="8*">
                                     <DataGridTextColumn.HeaderStyle>
                                         <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
                                             <Setter Property="Background" Value="#F0F0F0"/>
@@ -296,6 +238,11 @@ Margin="8,0,0,2">
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
+                    <Button x:Name="btnSave" Visibility="Collapsed"
+Content="Сохранить" Margin="-10,-41,615,297" 
+Background="#FF007ACC" Foreground="White"
+BorderThickness="0" Cursor="Hand" Height="NaN"
+Click="btnSave_Click"/>
                 </Grid>
             </Border>
         </StackPanel>

@@ -42,7 +42,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="350"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -55,7 +55,7 @@
             <ScrollViewer VerticalScrollBarVisibility="Disabled">
                 <StackPanel Margin="10">
 
-                    <TextBlock Text="ЭЛЕКТРОАКУСТИЧЕСКИЙ КАЛЬКУЛЯТОР (ver 0.2.2)" 
+                    <TextBlock Text="ЭЛЕКТРОАКУСТИЧЕСКИЙ КАЛЬКУЛЯТОР (ver 0.2.4)" 
                                Foreground="#FF007ACC" 
                                FontWeight="Bold" 
                                FontSize="14" 
@@ -70,21 +70,14 @@
                             Tag="SpeakerParams"
                             Style="{StaticResource MenuButtonStyle}">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="🔊" FontSize="18" Margin="0,0,10,0"/>
+                            <TextBlock Text="📢" FontSize="18" Margin="0,0,10,0"/>
                             <TextBlock Text="Параметры громкоговорителя" FontSize="14"/>
                         </StackPanel>
                     </Button>
 
-                    <Button x:Name="btnMountParams" 
-                            Click="MenuButton_Click"
-                            Tag="MountParams"
-                            Style="{StaticResource MenuButtonStyle}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="📐" FontSize="18" Margin="0,0,10,0"/>
-                            <TextBlock Text="Параметры установки" FontSize="14"/>
-                        </StackPanel>
-                    </Button>
 
+
+                    
                     <Button x:Name="btnRoomParams" 
                             Click="MenuButton_Click"
                             Tag="RoomParams"
@@ -92,6 +85,24 @@
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="🏢" FontSize="18" Margin="0,0,10,0"/>
                             <TextBlock Text="Параметры помещения" FontSize="14"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnAccousticParams" 
+        Click="MenuButton_Click"
+        Tag="AccousticParams"
+        Style="{StaticResource MenuButtonStyle}" Cursor="Hand">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🔊" FontSize="18" Margin="0,0,10,0"/>
+                            <TextBlock Text="Аккустические параметры помещения" FontSize="14"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnMountParams" 
+        Click="MenuButton_Click"
+        Tag="MountParams"
+        Style="{StaticResource MenuButtonStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="📐" FontSize="18" Margin="0,0,10,0"/>
+                            <TextBlock Text="Параметры установки" FontSize="14"/>
                         </StackPanel>
                     </Button>
 
@@ -106,7 +117,14 @@
                     </Button>
 
                     <Border Height="2" Background="#FF007ACC" Margin="5,15,5,15" Opacity="0.5"/>
-
+                    <Button x:Name="btnCalculate" 
+                        Click="ButtonCalculate_Click"
+                        Style="{StaticResource MenuButtonStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🧮" FontSize="18" Margin="0,0,10,0"/>
+                            <TextBlock Text="Рассчитать" FontSize="14"/>
+                        </StackPanel>
+                    </Button>
                     <!-- Кнопки управления -->
                     <Button x:Name="btnSave" 
                             Click="ButtonSave_Click"
@@ -143,14 +161,106 @@
                       Width="5" 
                       HorizontalAlignment="Center" 
                       Background="#FF007ACC"/>
+        <ToolBarTray DockPanel.Dock="Top" Background="#FFF5F9FF" Margin="5,0,0,0" Grid.Column="2" Height="36" VerticalAlignment="Top">
+            <ToolBar Background="#FFF5F9FF" IsOverflowOpen="False" Cursor="">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
+                    <!-- Кнопки слева, друг под другом -->
+                    <Button x:Name="ButtonAdd" Grid.Row="0" Grid.Column="0" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave"
+                        ToolTip="Добавить" 
+                        Visibility="Visible" 
+                        Background="Transparent" 
+                        BorderBrush="Transparent" 
+                        Click="ButtonAdd_Click"
+                        Margin="0,0,0,2">
+                        <Image Source="/Image/add.png" Width="24" Height="24"/>
+                    </Button>
+
+                    <Button x:Name="ButtonBack" Grid.Row="0" Grid.Column="0" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave"
+                        ToolTip="Назад" 
+                        Visibility="Collapsed" 
+                        Background="Transparent" 
+                        BorderBrush="Transparent" 
+                        Click="ButtonBack_Click"
+                        Margin="0,0,0,2" HorizontalAlignment="Left" Width="28">
+                        <Image Source="/Image/return.png" Width="25" Height="24"/>
+                    </Button>
+
+                    <!-- Кнопка Save - справа от них, на уровне первой строки -->
+                    <Button x:Name="ButtonDel" Grid.Row="0" Grid.Column="1" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave"
+                        ToolTip="Удалить" 
+                        Visibility="Visible" 
+                        Background="Transparent" 
+                        BorderBrush="Transparent" 
+                        Click="ButtonDel_Click"
+                        HorizontalAlignment="Right"
+                        Margin="38,0,0,2">
+                        <Image Source="/Image/delete.png" Width="24" Height="24"/>
+                    </Button>
+                    <Button x:Name="ButtonSave" Grid.Row="0" Grid.Column="1" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave"
+                        ToolTip="Сохранить" 
+                        Visibility="Visible" 
+                        Background="Transparent" 
+                        BorderBrush="Transparent" 
+                        Click="bntSave_Click"
+                        HorizontalAlignment="Left"
+                        Margin="8,0,0,2">
+                        <Image Source="/Image/save.png" Width="24" Height="24"/>
+                    </Button>
+                    <Button x:Name="ButtonCopy" Grid.Row="0" Grid.Column="2" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave"
+                        ToolTip="Копировать" 
+                        Visibility="Visible" 
+                        Background="Transparent" 
+                        BorderBrush="Transparent" 
+                        Click="ButtonCopy_Click"
+                        HorizontalAlignment="Left"
+                        Margin="8,0,0,2">
+                        <Image Source="/Image/copy.png" Width="24" Height="24"/>
+                    </Button>
+                    <Button x:Name="ButtonPaste" Grid.Row="0" Grid.Column="3" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave"
+                        ToolTip="Далее" 
+                        Visibility="Visible" 
+                        Background="Transparent" 
+                        BorderBrush="Transparent" 
+                        Click="ButtonPaste_Click"
+                        HorizontalAlignment="Left"
+                        Margin="8,0,0,2">
+                        <Image Source="/Image/paste.png" Width="24" Height="24"/>
+                    </Button>
+                    <Button x:Name="ButtonNext" Grid.Row="0" Grid.Column="4" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave"
+                        ToolTip="Далее" 
+                        Visibility="Visible" 
+                        Background="Transparent" 
+                        BorderBrush="Transparent" 
+                        Click="ButtonNext_Click"
+                        HorizontalAlignment="Left"
+                        Margin="8,0,0,2">
+                        <Image Source="/Image/forward.png" Width="24" Height="24"/>
+                    </Button>
+                </Grid>
+            </ToolBar>
+        </ToolBarTray>
         <!-- Рабочая область с контентом -->
         <!-- Рабочая область с контентом -->
         <Border Grid.Column="2" 
         BorderBrush="#FF007ACC" 
         BorderThickness="2" 
         CornerRadius="5" 
-        Margin="10"
+        Margin="10,47,10,10"
         Padding="10">
             <ScrollViewer x:Name="MainContentScroll" 
                   VerticalScrollBarVisibility="Auto"

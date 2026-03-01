@@ -1,4 +1,5 @@
 ﻿using Calculator.Class;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Calculator.Views
@@ -41,6 +42,21 @@ namespace Calculator.Views
             tb_U_vh.Text = "";
             tb_delta.Text = "";
             cbType.Text = "";
+        }
+        public void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            double H = parent.GetH();
+            double UH = parent.GetUH();
+            double U_vh = parent.GetUvh();
+            double delta = parent.GetDelta();
+
+            // Проверка заполнения полей
+            if (H == 0 || UH == 0 || U_vh == 0 || delta == 0)
+            {
+                MessageBox.Show("Заполните все поля");
+                return;
+            }
+            parent.NextSection();
         }
     }
 }

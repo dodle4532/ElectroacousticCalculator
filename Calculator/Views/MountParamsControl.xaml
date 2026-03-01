@@ -59,6 +59,11 @@
                     <Label FontWeight="DemiBold" Grid.Row="4" Grid.Column="0" Content="Макс. потери по напряжению:" Margin="5,5,5,5"/>
                     <TextBox x:Name="tb_delta" Grid.Row="4" Grid.Column="1" Margin="10,5,10,5"/>
                     <Label FontWeight="DemiBold" Grid.Row="4" Grid.Column="2" FontStyle="Italic" Content="%" Margin="5,5,5,5"/>
+                <Button x:Name="btnSave" Visibility="Collapsed"
+Content="Сохранить" Margin="-8,-54,600,59" 
+Background="#FF007ACC" Foreground="White"
+BorderThickness="0" Cursor="Hand" Height="NaN"
+Click="btnSave_Click"/>
                 </Grid>
             </Border>
         </StackPanel>

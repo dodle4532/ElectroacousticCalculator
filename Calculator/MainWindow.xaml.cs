@@ -1,29 +1,41 @@
-﻿using System;
+﻿using Calculator.Class;
+using Calculator.Forms;
+using Calculator.Views;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Calculator.Class;
-using Calculator.Forms;
-using Calculator.Views;
+using System.Windows.Media;
+using System.Xml.Linq;
 
 namespace Calculator
 {
     public partial class MainWindow : Window
     {
         SpeakerDBHelper speakerDBHelper = new SpeakerDBHelper();
+        RoomDBHelp roomDBHelp = new RoomDBHelp();
         CalculationDBHelp calculationDBHelp = new CalculationDBHelp();
         List<Speaker> speakers;
+        List<Room> rooms;
         public int selectedSpeakerId = -1;
+        public int selectedRoomId = -1;
+        public Speaker copyingSpeaker;
+        public Room copyingRoom;
         Calculation curCalculation = new Calculation();
 
         // User Controls
         SpeakerConfigControl speakerConfigControl;
         MountParamsControl mountParamsControl;
         RoomParamsControl roomParamsControl;
+        AccousticParamsControl accousticParamsControl;
         CalculatedParamsControl calculatedParamsControl;
         LoadCalculationControl loadCalculationControl;
         SaveCalculationControl saveCalculationControl;
+        string curSection;
+
+        List<string> sections = new List<string> { "SpeakerParams", "RoomParams", "AccousticParams", "MountParams", "CalculatedParams" };
 
         public MainWindow()
         {
@@ -36,6 +48,7 @@ namespace Calculator
             mountParamsControl = new MountParamsControl(this);
             roomParamsControl = new RoomParamsControl(this);
             calculatedParamsControl = new CalculatedParamsControl(this);
+            accousticParamsControl = new AccousticParamsControl(this);
             loadCalculationControl = new LoadCalculationControl(this);
             saveCalculationControl = new SaveCalculationControl(this);
             speakerConfigControl = new SpeakerConfigControl(this);
@@ -49,26 +62,79 @@ namespace Calculator
             {
                 case "SpeakerParams":
                     MainContentArea.Content = speakerConfigControl;
+                    curSection = sectionTag;
+                    ButtonAdd.Visibility = Visibility.Visible;
+                    ButtonSave.Visibility = Visibility.Visible;
+                    ButtonDel.Visibility = Visibility.Visible;
+                    ButtonCopy.Visibility = Visibility.Visible;
+                    ButtonPaste.Visibility = Visibility.Visible;
                     break;
                 case "MountParams":
                     MainContentArea.Content = mountParamsControl;
+                    curSection = sectionTag;
+                    ButtonAdd.Visibility = Visibility.Collapsed;
+                    ButtonSave.Visibility = Visibility.Collapsed;
+                    ButtonDel.Visibility = Visibility.Collapsed;
+                    ButtonCopy.Visibility = Visibility.Collapsed;
+                    ButtonPaste.Visibility = Visibility.Collapsed;
                     break;
                 case "RoomParams":
                     MainContentArea.Content = roomParamsControl;
+                    curSection = sectionTag;
+                    ButtonAdd.Visibility = Visibility.Visible;
+                    ButtonSave.Visibility = Visibility.Visible;
+                    ButtonDel.Visibility = Visibility.Visible;
+                    ButtonCopy.Visibility = Visibility.Visible;
+                    ButtonPaste.Visibility = Visibility.Visible;
+                    break;
+                case "AccousticParams":
+                    MainContentArea.Content = accousticParamsControl;
+                    curSection = sectionTag;
+                    ButtonAdd.Visibility = Visibility.Visible;
+                    ButtonSave.Visibility = Visibility.Visible;
+                    ButtonDel.Visibility = Visibility.Visible;
+                    ButtonCopy.Visibility = Visibility.Visible;
+                    ButtonPaste.Visibility = Visibility.Visible;
                     break;
                 case "CalculatedParams":
                     MainContentArea.Content = calculatedParamsControl;
+                    ButtonAdd.Visibility = Visibility.Collapsed;
+                    ButtonSave.Visibility = Visibility.Collapsed;
+                    ButtonDel.Visibility = Visibility.Collapsed;
+                    ButtonCopy.Visibility = Visibility.Collapsed;
+                    ButtonPaste.Visibility = Visibility.Collapsed;
                     break;
                 case "LoadCalculation":
                     MainContentArea.Content = loadCalculationControl;
+                    ButtonAdd.Visibility = Visibility.Collapsed;
+                    ButtonSave.Visibility = Visibility.Collapsed;
+                    ButtonDel.Visibility = Visibility.Collapsed;
+                    ButtonCopy.Visibility = Visibility.Collapsed;
+                    ButtonPaste.Visibility = Visibility.Collapsed;
                     break;
                 case "SaveCalculation":
                     MainContentArea.Content = saveCalculationControl;
+                    ButtonAdd.Visibility = Visibility.Collapsed;
+                    ButtonSave.Visibility = Visibility.Collapsed;
+                    ButtonDel.Visibility = Visibility.Collapsed;
+                    ButtonCopy.Visibility = Visibility.Collapsed;
+                    ButtonPaste.Visibility = Visibility.Collapsed;
                     break;
                 default:
                     MainContentArea.Content = null;
+                    ButtonAdd.Visibility = Visibility.Collapsed;
+                    ButtonSave.Visibility = Visibility.Collapsed;
+                    ButtonDel.Visibility = Visibility.Collapsed;
+                    ButtonCopy.Visibility = Visibility.Collapsed;
+                    ButtonPaste.Visibility = Visibility.Collapsed;
                     break;
             }
+        }
+
+        public void NextSection()
+        {
+            int index = sections.FindIndex(x => x == curSection);
+            ShowSection(sections[index + 1]);
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
@@ -90,6 +156,11 @@ namespace Calculator
             speakers = speakerDBHelper.GetAllSpeakers();
             speakerConfigControl.UpdateSpeakersList(speakers, selectedSpeakerId);
         }
+        public void UpdateRooms()
+        {
+            rooms = roomDBHelp.GetAllRooms();
+            roomParamsControl.UpdateRoomsList(rooms, selectedRoomId);
+        }
 
         public void UpdateCurSpeaker()
         {
@@ -108,6 +179,7 @@ namespace Calculator
             speakerConfigControl.Clear();
             mountParamsControl.ClearFields();
             roomParamsControl.ClearFields();
+            accousticParamsControl.ClearFields();
             calculatedParamsControl.ClearFields();
             selectedSpeakerId = -1;
             ShowSection("SpeakerParams");
@@ -129,25 +201,14 @@ namespace Calculator
                     UH = GetUH(),
                     U_vh = GetUvh(),
                     delta = GetDelta(),
-                    USH_p = GetUSH(),
-                    a = GetA(),
-                    b_ = Get_b(),
-                    h_ = GetH(),
-                    N = GetN(),
-                    a1 = GetA1(),
-                    a2 = GetA2(),
                     V = GetV(),
                     S = GetS(),
                     a_ekv = GetAEkv(),
                     S_sr = GetSSr(),
                     B = GetB(),
-                    t_r = GetTr(),
                     SpeakerId = selectedSpeakerId,
                     SpeakerType = mountParamsControl.GetSpeakerType(),
-                    NoiseLevel = roomParamsControl.GetCurNoiseLevel(),
-                    Surfaces = roomParamsControl.GetSelectedSurfacesId(),
-                    ApprId = roomParamsControl.GetSelectedApprId(),
-                    AccConstId = roomParamsControl.GetSelectedAccConstId()
+                    Room = roomParamsControl.GetCurRoomId()
                 };
 
                 curCalculation = calculation;
@@ -182,17 +243,19 @@ namespace Calculator
         {
             curCalculation.Name = name;
             calculationDBHelp.Add(curCalculation);
+            loadCalculationControl.Update();
         }
 
         public void LoadCalculation(Calculation calculation)
         {
             if (calculation == null) return;
-
+            Room room = roomDBHelp.GetRoom(calculation.Room);
             mountParamsControl.SetValues(calculation.H, calculation.UH, calculation.U_vh, calculation.delta);
-            roomParamsControl.SetValues(calculation.USH_p, calculation.a, calculation.b_, calculation.h_,
-                                       calculation.N, calculation.a1, calculation.a2, calculation.NoiseLevel, calculation.Surfaces, calculation.ApprId, calculation.AccConstId);
+            roomParamsControl.SetValues(room.USH_p, room.a, room.b_, room.h_,
+                                       room.N, room.NoiseLevel, room.Id);
+            accousticParamsControl.SetValues(room.a1, room.Surfaces, room.ApprId, room.AccConstId, room.t_r);
             calculatedParamsControl.SetValues(calculation.V, calculation.S, calculation.a_ekv,
-                                            calculation.S_sr, calculation.B, calculation.t_r);
+                                            calculation.S_sr, calculation.B, room.t_r);
 
             var speaker = speakers?.Find(x => x.Id == calculation.SpeakerId);
             if (speaker != null)
@@ -218,6 +281,10 @@ namespace Calculator
         public void UpdateCalculations()
         {
             loadCalculationControl.Update();
+        }
+        public void ShowCalculatedParams()
+        {
+            ShowSection("CalculatedParams");
         }
 
         public void ScrollToRight()
@@ -272,18 +339,125 @@ namespace Calculator
 
         public double GetA1()
         {
-            return double.TryParse(roomParamsControl.tb_a1.Text.Replace(".", ","), out double result) ? result : 0;
+            return double.TryParse(accousticParamsControl.tb_a1.Text.Replace(".", ","), out double result) ? result : 0;
         }
 
-        public double GetA2()
-        {
-            return double.TryParse(roomParamsControl.tb_a2.Text.Replace(".", ","), out double result) ? result : 0;
-        }
         public double GetV() => double.TryParse(calculatedParamsControl.tb_V.Text.Replace(".", ","), out double result) ? result : 0;
         public double GetS() => double.TryParse(calculatedParamsControl.tb_S.Text.Replace(".", ","), out double result) ? result : 0;
         public double GetAEkv() => double.TryParse(calculatedParamsControl.tb_a_ekv.Text.Replace(".", ","), out double result) ? result : 0;
         public double GetSSr() => double.TryParse(calculatedParamsControl.tb_S_sr.Text.Replace(".", ","), out double result) ? result : 0;
         public double GetB() => double.TryParse(calculatedParamsControl.tb_B.Text.Replace(".", ","), out double result) ? result : 0;
-        public double GetTr() => double.TryParse(calculatedParamsControl.tb_t_r.Text.Replace(".", ","), out double result) ? result : 0;
+        public double GetTr() => double.TryParse(accousticParamsControl.tb_t.Text.Replace(".", ","), out double result) ? result : 0;
+
+        private void ButtonCalculate_Click(object sender, RoutedEventArgs e)
+        {
+            calculatedParamsControl.btnCalc_Click(sender, e);
+            ShowSection("CalculatedParams");
+        }
+
+        private void ButtonBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (curSection == "SpeakerParams")
+                speakerConfigControl.ButtonBack_Click(sender, e);
+            else roomParamsControl.ButtonBack_Click(sender, e);
+        }
+
+        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            if (curSection == "SpeakerParams")
+                speakerConfigControl.ButtonAdd_Click(sender, e);
+            else roomParamsControl.ButtonAdd_Click(sender, e);
+        }
+
+        private void ButtonDel_Click(object sender, RoutedEventArgs e)
+        {
+            if (curSection == "SpeakerParams")
+                speakerConfigControl.ButtonDel_Click(sender, e);
+            else roomParamsControl.ButtonDel_Click(sender, e);
+        }
+
+        private void ButtonNext_Click(object sender, RoutedEventArgs e)
+        {
+            switch (curSection)
+            {
+                case "SpeakerParams":
+                    speakerConfigControl.btnSave_Click(sender, e);
+                    break;
+                case "MountParams":
+                    mountParamsControl.btnSave_Click(sender, e);
+                    break;
+                case "AccousticParams":
+                    accousticParamsControl.btnSave_Click(sender, e);
+                    break;
+                case "RoomParams":
+                    roomParamsControl.btnSave_Click(sender, e);
+                    break;
+                default:
+                    return;
+            }
+        }
+
+
+        private void Button_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Button button = sender as Button;
+            button.Background = new SolidColorBrush(Colors.LightBlue);
+        }
+
+
+        private void Button_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Button button = sender as Button;
+            button.Background = new SolidColorBrush(Colors.Transparent);
+        }
+
+        private void ButtonPaste_Click(object sender, RoutedEventArgs e)
+        {
+            if (curSection == "SpeakerParams")
+            {
+                if (copyingSpeaker != null)
+                {
+                    speakerConfigControl.SetSpeaker(copyingSpeaker);
+                }
+            }
+            else
+            {
+                if (copyingRoom != null)
+                {
+                    roomParamsControl.SetRoom(copyingRoom);
+                }
+            }
+            
+        }
+        public void SetAccousticParamControlValues(double a1, List<int> surfacesList, int ApprId, int AccConstId, double t_r)
+        {
+            accousticParamsControl.SetValues(a1, surfacesList, ApprId, AccConstId, t_r);
+        }
+
+        private void ButtonCopy_Click(object sender, RoutedEventArgs e)
+        {
+            if (curSection == "SpeakerParams")
+                copyingSpeaker = speakerConfigControl.GetCurSpeaker();
+            else copyingRoom = roomParamsControl.GetCurRoom();
+        }
+
+        private void bntSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (curSection == "SpeakerParams")
+                speakerConfigControl.ButtonSave_Click(sender, e);
+            else roomParamsControl.ButtonSave_Click(sender, e);
+        }
+        public List<int> GetSelectedSurfacesId()
+        {
+            return accousticParamsControl.GetSelectedSurfacesId();
+        }
+        public int GetSelectedApprId()
+        {
+            return accousticParamsControl.GetSelectedApprId();
+        }
+        public int GetSelectedAccConstId()
+        {
+            return accousticParamsControl.GetSelectedAccConstId();
+        }
     }
 }
