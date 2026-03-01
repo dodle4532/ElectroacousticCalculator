@@ -55,7 +55,7 @@
             <ScrollViewer VerticalScrollBarVisibility="Disabled">
                 <StackPanel Margin="10">
 
-                    <TextBlock Text="ЭЛЕКТРОАКУСТИЧЕСКИЙ КАЛЬКУЛЯТОР (ver 0.2.4)" 
+                    <TextBlock Text="ЭЛЕКТРОАКУСТИЧЕСКИЙ КАЛЬКУЛЯТОР (ver 0.3.1)" 
                                Foreground="#FF007ACC" 
                                FontWeight="Bold" 
                                FontSize="14" 
